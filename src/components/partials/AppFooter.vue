@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="app-footer">
+  <section v-if="isLoggedIn" class="app-footer">
     <footer class="footer">
       <div class="container-fluid clearfix">
         <span
@@ -17,10 +17,16 @@
   </section>
 </template>
 
-<script lang="js">
+<script>
+import { mapGetters } from "vuex";
+
 export default {
-  name: 'app-footer'
-}
+  name: "AppFooter",
+
+  computed: {
+    ...mapGetters("auth", ["isLoggedIn"])
+  }
+};
 </script>
 
 <style scoped lang="scss">

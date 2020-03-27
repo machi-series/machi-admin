@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="app-sidebar">
+  <section v-if="isLoggedIn" class="app-sidebar">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
         <li class="nav-item nav-profile">
@@ -159,10 +159,15 @@
   </section>
 </template>
 
-<script lang="js">
+<script>
+import { mapGetters } from "vuex";
 export default {
-  name: 'app-sidebar'
-}
+  name: "AppSidebar",
+
+  computed: {
+    ...mapGetters("auth", ["isLoggedIn"])
+  }
+};
 </script>
 
 <style scoped lang="scss">

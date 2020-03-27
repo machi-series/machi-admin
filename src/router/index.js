@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from "../store";
 
 // Dashboard Components
 import dashboard from "../views/dashboard";
@@ -34,7 +35,7 @@ import register from "../views/sample-pages/register";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   linkActiveClass: "active",
@@ -52,17 +53,20 @@ export default new Router({
     {
       path: "/404",
       name: "error-404",
-      component: error404
+      component: error404,
+      meta: { isGuestRoute: true }
     },
     {
       path: "/500",
       name: "error-500",
-      component: error500
+      component: error500,
+      meta: { isGuestRoute: true }
     },
     {
       path: "/login",
       name: "login",
-      component: login
+      component: login,
+      meta: { isGuestRoute: true }
     },
     {
       path: "/register",
@@ -160,3 +164,23 @@ export default new Router({
     // }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = store.getters["auth/isLoggedIn"];
+  const isAdmin = store.getters["auth/isAdmin"];
+  const { isGuestRoute = false, isAdminRoute = false } = to.meta;
+
+  if (isGuestRoute && isLoggedIn) {
+    return next({ name: "dashboard" });
+  }
+  if (isAdminRoute && !isAdmin) {
+    return next({ name: "dashboard" });
+  }
+  if (!isLoggedIn && to.name !== "login") {
+    return next({ name: "login" });
+  }
+
+  return next();
+});
+
+export default router;

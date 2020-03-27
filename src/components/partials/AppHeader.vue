@@ -1,5 +1,11 @@
 <template lang="html">
-  <b-navbar class="fixed-top" toggleable="md" type="dark" variant="info">
+  <b-navbar
+    v-if="isLoggedIn"
+    class="fixed-top"
+    toggleable="md"
+    type="dark"
+    variant="info"
+  >
     <div
       class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center"
     >
@@ -176,15 +182,18 @@
   </b-navbar>
 </template>
 
-<script lang="js">
+<script>
+import { mapGetters } from "vuex";
 export default {
-  name: 'app-header',
-  methods: {
+  name: "AppHeader",
+
+  computed: {
     collapedMobileSidebar: () => {
-      document.querySelector('.sidebar').classList.toggle('active')
-    }
+      document.querySelector(".sidebar").classList.toggle("active");
+    },
+    ...mapGetters("auth", ["isLoggedIn"])
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
