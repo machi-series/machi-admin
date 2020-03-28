@@ -34,6 +34,12 @@
           >
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="/tags">
+            <i class="mdi mdi-folder-multiple-outline menu-icon"></i>
+            <span class="menu-title">Widgets</span>
+          </router-link>
+        </li>
+        <li class="nav-item">
           <span class="nav-link" v-b-toggle="'sample-pages'">
             <img
               class="menu-icon"

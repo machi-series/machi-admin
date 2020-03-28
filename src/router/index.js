@@ -4,6 +4,7 @@ import store from "../store";
 
 // Dashboard Components
 import dashboard from "../views/dashboard";
+import Tags from "../views/Tags";
 
 // Widgets
 import widgets from "../views/widgets";
@@ -44,6 +45,11 @@ const router = new Router({
       path: "/",
       name: "dashboard",
       component: dashboard
+    },
+    {
+      path: "/tags",
+      name: "tags",
+      component: Tags
     },
     {
       path: "/widgets",
