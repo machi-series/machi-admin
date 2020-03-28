@@ -33,7 +33,7 @@
           type="submit"
           variant="success"
           class="mr-2"
-          :disabled="!formValid"
+          :disabled="!formValid || !formDirty"
         >
           {{ isEditing ? "Atualizar" : "Criar" }}
         </b-button>
@@ -109,7 +109,7 @@ export default {
 
     onError(err) {
       console.error(err);
-      // this.$swal("😔", "Algo deu errado", "error");
+      this.$swal("😔", "Algo deu errado", "error");
     }
   }
 };

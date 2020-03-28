@@ -60,7 +60,7 @@ const WithForm = defaultForm => {
           const validator =
             this.$options.validateForm && this.$options.validateForm[field];
 
-          const invalid = validator && !validator(this.form.slug);
+          const invalid = validator && !validator(this.form[field]);
           if (invalid) {
             state = false;
             messages.push("Inválido");

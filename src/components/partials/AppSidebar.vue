@@ -33,6 +33,12 @@
           >
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="/series">
+            <i class="mdi mdi-laptop menu-icon"></i>
+            <span class="menu-title">Séries</span>
+          </router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="/tags">
             <i class="mdi mdi-folder-multiple-outline menu-icon"></i>
             <span class="menu-title">Tags</span>

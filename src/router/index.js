@@ -5,6 +5,7 @@ import store from "../store";
 // Dashboard Components
 import dashboard from "../views/dashboard";
 import Tags from "../views/Tags";
+import Series from "../views/Series";
 
 // Widgets
 import widgets from "../views/widgets";
@@ -50,6 +51,11 @@ const router = new Router({
       path: "/tags",
       name: "tags",
       component: Tags
+    },
+    {
+      path: "/series",
+      name: "series",
+      component: Series
     },
     {
       path: "/widgets",
