@@ -37,7 +37,7 @@ export const actions = {
       .post("/login", { email, password })
       .then(async ({ data: { token } }) => {
         commit("setToken", token);
-        const user = await axios.get("/me");
+        const { data: user } = await axios.get("/me");
         commit("setUser", user);
       });
   },

@@ -158,17 +158,26 @@
         <b-nav-item-dropdown right class="preview-list">
           <template slot="button-content">
             <img
-              src="../../assets/images/faces/face4.jpg"
+              :src="currentUser.email | gravatar({ s: 48 })"
               alt="profile image"
               class="img-xs rounded-circle"
             />
           </template>
-          <b-dropdown-item href="#" class="preview-item flex-wrap"
-            >Profile</b-dropdown-item
+          <b-dropdown-item href="#" class="preview-item flex-wrap">
+            Profile
+          </b-dropdown-item>
+          <b-dropdown-item
+            @click.prevent="
+              () => {
+                logout();
+                $router.push({ name: 'login' });
+              }
+            "
+            href="#"
+            class="preview-item flex-wrap"
           >
-          <b-dropdown-item href="#" class="preview-item flex-wrap"
-            >Signout</b-dropdown-item
-          >
+            Signout
+          </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <button
@@ -183,7 +192,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "AppHeader",
 
@@ -191,7 +200,11 @@ export default {
     collapedMobileSidebar: () => {
       document.querySelector(".sidebar").classList.toggle("active");
     },
-    ...mapGetters("auth", ["isLoggedIn"])
+    ...mapGetters("auth", ["isLoggedIn", "currentUser"])
+  },
+
+  methods: {
+    ...mapActions("auth", ["logout"])
   }
 };
 </script>

@@ -5,13 +5,12 @@
         <li class="nav-item nav-profile">
           <div class="nav-link">
             <div class="profile-image">
-              <img src="../../assets/images/faces/face4.jpg" alt="image" />
+              <img :src="currentUser | gravatar({ s: 70 })" alt="image" />
               <span class="online-status online"></span>
             </div>
             <div class="profile-name">
-              <p class="name">Richard V.Welsh</p>
-              <p class="designation">Manager</p>
-              <div class="badge badge-teal mx-auto mt-3">Online</div>
+              <p class="name">{{ currentUser.username }}</p>
+              <p class="designation">{{ currentUser.role | capitalize }}</p>
             </div>
           </div>
         </li>
@@ -36,7 +35,7 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/tags">
             <i class="mdi mdi-folder-multiple-outline menu-icon"></i>
-            <span class="menu-title">Widgets</span>
+            <span class="menu-title">Tags</span>
           </router-link>
         </li>
         <li class="nav-item">
@@ -171,7 +170,7 @@ export default {
   name: "AppSidebar",
 
   computed: {
-    ...mapGetters("auth", ["isLoggedIn"])
+    ...mapGetters("auth", ["isLoggedIn", "currentUser"])
   }
 };
 </script>
