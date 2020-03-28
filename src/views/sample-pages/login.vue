@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="login">
+  <section class="login" style="width: 100vw">
     <div class="wrapper d-flex align-items-center auth login-full-bg">
       <div class="row w-100">
         <div class="col-lg-6 mx-auto">
