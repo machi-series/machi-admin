@@ -16,6 +16,14 @@ Vue.prototype.$axios = axios;
 Vue.filter("capitalize", function capitalize(data) {
   return data[0].toUpperCase() + data.slice(1);
 });
+Vue.filter("translateRole", function capitalize(role) {
+  return {
+    user: "Usuário comum",
+    publisher: "Publicador",
+    manager: "Gerente",
+    admin: "Administrador"
+  }[role];
+});
 Vue.filter("gravatar", function gravatarize(email, options) {
   return gravatar.url(email, options);
 });

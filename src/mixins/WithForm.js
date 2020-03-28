@@ -1,3 +1,5 @@
+import { Object } from "core-js";
+
 function defaultDirtyForForm(form) {
   return Object.keys(form).reduce((acc, key) => {
     acc[key] = false;
@@ -129,6 +131,11 @@ const WithForm = defaultForm => {
           .catch(err => {
             if (err?.response?.data?._validation) {
               this.formServerValidations = err?.response?.data;
+              for (let field of Object.keys(this.formServerValidations)) {
+                if (this.isDirty[field] != null) {
+                  this.isDirty[field] = true;
+                }
+              }
               return;
             }
 
@@ -136,6 +143,32 @@ const WithForm = defaultForm => {
               errorHandler(err);
             }
           });
+      },
+
+      onCreated({ data: tag }) {
+        const title = this.$options.createdAlertTitle || "Criado";
+        this.resetForm();
+        this.$swal("💪 Sucesso", title, "success").then(() => {
+          this.$emit("created", tag);
+        });
+        setTimeout(() => {
+          this.$swal.close();
+        }, 1500);
+      },
+
+      onUpdate({ data: tag }) {
+        const title = this.$options.updatedAlertTitle || "Editado";
+        this.resetForm();
+        this.$emit("updated", tag);
+        this.$swal("💪 Sucesso", title, "success");
+        setTimeout(() => {
+          this.$swal.close();
+        }, 1500);
+      },
+
+      onError(err) {
+        console.error(err);
+        this.$swal("😔", "Algo deu errado", "error");
       }
     },
 

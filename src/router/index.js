@@ -4,6 +4,7 @@ import store from "../store";
 
 // Dashboard Components
 import dashboard from "../views/dashboard";
+import Users from "../views/Users";
 import Tags from "../views/Tags";
 import Series from "../views/Series";
 
@@ -46,6 +47,11 @@ const router = new Router({
       path: "/",
       name: "dashboard",
       component: dashboard
+    },
+    {
+      path: "/users",
+      name: "users",
+      component: Users
     },
     {
       path: "/tags",

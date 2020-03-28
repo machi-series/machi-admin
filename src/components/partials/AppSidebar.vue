@@ -5,12 +5,15 @@
         <li class="nav-item nav-profile">
           <div class="nav-link">
             <div class="profile-image">
-              <img :src="currentUser | gravatar({ s: 70 })" alt="image" />
+              <img
+                :src="currentUser.email | gravatar({ s: 100 })"
+                alt="image"
+              />
               <span class="online-status online"></span>
             </div>
             <div class="profile-name">
               <p class="name">{{ currentUser.username }}</p>
-              <p class="designation">{{ currentUser.role | capitalize }}</p>
+              <p class="designation">{{ currentUser.role | translateRole }}</p>
             </div>
           </div>
         </li>
@@ -31,6 +34,12 @@
               alt="menu icon"
             /><span class="menu-title">Widgets</span></router-link
           >
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/users">
+            <i class="mdi mdi-account-multiple menu-icon"></i>
+            <span class="menu-title">Usuários</span>
+          </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/series">

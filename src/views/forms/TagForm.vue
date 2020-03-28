@@ -73,6 +73,9 @@ export default {
     })
   ],
 
+  createdAlertTitle: "Tag criada",
+  updatedAlertTitle: "Tag editada",
+
   validateForm: {
     slug(value) {
       return /^([a-z]|-|\d)+$/.test(value);
@@ -86,30 +89,6 @@ export default {
 
     handleUpdate(id, payload) {
       return this.$axios.put("/tags/" + id, payload);
-    },
-
-    onCreated({ data: tag }) {
-      this.resetForm();
-      this.$swal("💪 Sucesso", "Tag criada", "success").then(() => {
-        this.$emit("created", tag);
-      });
-      setTimeout(() => {
-        this.$swal.close();
-      }, 1500);
-    },
-
-    onUpdate({ data: tag }) {
-      this.resetForm();
-      this.$emit("updated", tag);
-      this.$swal("💪 Sucesso", "Tag Editada", "success");
-      setTimeout(() => {
-        this.$swal.close();
-      }, 1500);
-    },
-
-    onError(err) {
-      console.error(err);
-      this.$swal("😔", "Algo deu errado", "error");
     }
   }
 };

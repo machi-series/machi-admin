@@ -32,7 +32,7 @@
           ></b-form-select>
 
           <b-form-invalid-feedback>
-            {{ slugValidation.messages.join(", ") }}
+            {{ statusValidation.messages.join(", ") }}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -117,6 +117,9 @@ export default {
     })
   ],
 
+  createdAlertTitle: "Série criada",
+  updatedAlertTitle: "Série editada",
+
   validateForm: {
     slug(value) {
       return /^([a-z]|-|\d)+$/.test(value);
@@ -153,30 +156,6 @@ export default {
         ...payload,
         ...additionalFields
       });
-    },
-
-    onCreated({ data: item }) {
-      this.resetForm();
-      this.$swal("💪 Sucesso", "Série criada", "success").then(() => {
-        this.$emit("created", item);
-      });
-      setTimeout(() => {
-        this.$swal.close();
-      }, 1500);
-    },
-
-    onUpdate({ data: item }) {
-      this.resetForm();
-      this.$emit("updated", item);
-      this.$swal("💪 Sucesso", "Série editada", "success");
-      setTimeout(() => {
-        this.$swal.close();
-      }, 1500);
-    },
-
-    onError(err) {
-      console.error(err);
-      this.$swal("😔", "Algo deu errado", "error");
     }
   }
 };
