@@ -197,14 +197,14 @@ export default {
   name: "AppHeader",
 
   computed: {
-    collapedMobileSidebar: () => {
-      document.querySelector(".sidebar").classList.toggle("active");
-    },
     ...mapGetters("auth", ["isLoggedIn", "currentUser"])
   },
 
   methods: {
-    ...mapActions("auth", ["logout"])
+    ...mapActions("auth", ["logout"]),
+    collapedMobileSidebar: () => {
+      document.querySelector(".sidebar").classList.toggle("active");
+    }
   }
 };
 </script>
