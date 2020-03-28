@@ -10,10 +10,10 @@
       class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center"
     >
       <a class="navbar-brand brand-logo" href="/demo/star-admin-vue/"
-        ><img src="../../assets/images/logo.svg" alt="logo"
+        ><img src="../../assets/logo.png" alt="logo"
       /></a>
       <a class="navbar-brand brand-logo-mini" href="/demo/star-admin-vue/"
-        ><img src="../../assets/images/logo-mini.svg" alt="logo"
+        ><img src="../../assets/logo-mini.png" alt="logo"
       /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center ml-auto ml-lg-0">
