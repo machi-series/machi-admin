@@ -14,7 +14,13 @@
       <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <b-table striped hover responsive :items="items" :fields="fields">
+            <b-table
+              striped
+              hover
+              responsive
+              :items="items"
+              :fields="$options.fields"
+            >
               <template v-slot:cell(actions)="data">
                 <b-button
                   @click="editingEntity = data.item"
@@ -40,79 +46,36 @@
 </template>
 
 <script>
+import WithTable from "@/mixins/WithTable";
 import TagForm from "@/views/forms/TagForm.vue";
 
 export default {
   name: "Tags",
 
+  mixins: [WithTable("tags")],
+
   components: {
     TagForm
   },
 
-  data() {
-    return {
-      page: 1,
-      lastPage: 1,
-      total: 0,
-      perPage: 20,
-      items: [],
-
-      editingEntity: false,
-
-      fields: [
-        {
-          key: "id",
-          label: "ID"
-        },
-        {
-          key: "name",
-          label: "Nome"
-        },
-        {
-          key: "slug",
-          label: "Slug"
-        },
-        {
-          key: "actions",
-          label: "Ações"
-        }
-      ]
-    };
-  },
-
-  created() {
-    this.loadTags(1);
-  },
-
-  methods: {
-    async loadTags(page) {
-      const { data: pagination } = await this.$axios.get("/tags?page=" + page);
-
-      this.items = pagination.data;
-      this.page = +pagination.page;
-      this.lastPage = +pagination.lastPage;
-      this.total = +pagination.total;
-      this.perPage = +pagination.perPage;
+  fields: [
+    {
+      key: "id",
+      label: "ID"
     },
-
-    onCreated() {
-      this.loadTags(this.lastPage);
+    {
+      key: "name",
+      label: "Nome"
     },
-
-    onUpdated(item) {
-      this.editingEntity = item;
-
-      const found = this.items.find(i => i.id === item.id);
-      if (!found) {
-        return;
-      }
-      Object.assign(found, item);
+    {
+      key: "slug",
+      label: "Slug"
     },
-
-    onDeleted() {
-      this.loadTags(this.page);
+    {
+      key: "actions",
+      label: "Ações"
     }
-  }
+  ]
 };
 </script>
 

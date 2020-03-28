@@ -14,7 +14,13 @@
       <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <b-table striped hover responsive :items="items" :fields="fields">
+            <b-table
+              striped
+              hover
+              responsive
+              :items="items"
+              :fields="$options.fields"
+            >
               <template v-slot:cell(actions)="data">
                 <b-button
                   @click="editingEntity = data.item"
@@ -40,85 +46,35 @@
 </template>
 
 <script>
+import WithTable from "@/mixins/WithTable";
 import SeriesForm from "@/views/forms/SeriesForm.vue";
 
 export default {
   name: "Series",
 
+  mixins: [WithTable("series")],
+
   components: {
     SeriesForm
   },
 
-  data() {
-    return {
-      page: 1,
-      lastPage: 1,
-      total: 0,
-      perPage: 20,
-      items: [],
-
-      editingEntity: false,
-
-      fields: [
-        {
-          key: "id",
-          label: "ID"
-        },
-        {
-          key: "title",
-          label: "Título"
-        },
-        {
-          key: "slug",
-          label: "Slug"
-        },
-        {
-          key: "actions",
-          label: "Ações"
-        }
-      ]
-    };
-  },
-
-  created() {
-    this.loadItems(1);
-  },
-
-  methods: {
-    async loadItems(page) {
-      const { data: pagination } = await this.$axios.get(
-        "/series?page=" + page
-      );
-
-      this.items = pagination.data;
-      this.page = +pagination.page;
-      this.lastPage = +pagination.lastPage;
-      this.total = +pagination.total;
-      this.perPage = +pagination.perPage;
+  fields: [
+    {
+      key: "id",
+      label: "ID"
     },
-
-    onCreated() {
-      this.loadItems(this.lastPage);
+    {
+      key: "title",
+      label: "Título"
     },
-
-    onUpdated(item) {
-      this.editingEntity = item;
-
-      const found = this.items.find(i => i.id === item.id);
-      if (!found) {
-        return;
-      }
-      Object.assign(found, item);
+    {
+      key: "slug",
+      label: "Slug"
     },
-
-    onDeleted() {
-      this.loadItems(this.page);
+    {
+      key: "actions",
+      label: "Ações"
     }
-  }
+  ]
 };
 </script>
-
-<style scoped lang="scss">
-.tables {
-}
-</style>
