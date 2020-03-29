@@ -158,7 +158,7 @@
         <b-nav-item-dropdown right class="preview-list">
           <template slot="button-content">
             <img
-              :src="currentUser.email | gravatar({ s: 48 })"
+              :src="currentUser | avatar"
               alt="profile image"
               class="img-xs rounded-circle"
             />

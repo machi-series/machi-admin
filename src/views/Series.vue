@@ -22,12 +22,22 @@
               :fields="$options.fields"
             >
               <template v-slot:cell(actions)="data">
-                <b-button
-                  @click="editingEntity = data.item"
-                  variant="outline-primary"
-                >
-                  Editar
-                </b-button>
+                <b-button-group size="sm">
+                  <b-button
+                    @click="editingEntity = data.item"
+                    variant="primary"
+                  >
+                    Editar
+                  </b-button>
+                  <b-button
+                    @click.prevent="
+                      $router.push(`/series/${data.item.id}/episodes`)
+                    "
+                    variant="secondary"
+                  >
+                    Episódios
+                  </b-button>
+                </b-button-group>
               </template>
             </b-table>
 

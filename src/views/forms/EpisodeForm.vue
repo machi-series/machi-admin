@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <h4 class="card-title">
-        {{ isEditing ? "Editando Série" : "Criando Série" }}
+        {{ isEditing ? "Editando Episódio" : "Criando Episódio" }}
       </h4>
 
       <form @submit.prevent="submit" class="forms-sample">
@@ -61,17 +61,29 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="Sinópse">
-          <b-form-textarea
-            id="textarea"
-            v-model="form.synopsis"
-            @input="dirty('synopsis')"
-            :rows="2"
-            :max-rows="3"
-          ></b-form-textarea>
+        <b-form-group label="Número">
+          <b-form-input
+            v-model="form.number"
+            @input="dirty('number')"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Tipo">
+          <EpisodeTypeInput v-model="form.type" @input="dirty('type')" />
 
           <b-form-invalid-feedback>
-            {{ slugValidation.messages.join(", ") }}
+            {{ typeValidation.messages.join(", ") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label="Qualidade">
+          <EpisodeQualityInput
+            v-model="form.quality"
+            @input="dirty('quality')"
+          />
+
+          <b-form-invalid-feedback>
+            {{ qualityValidation.messages.join(", ") }}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -108,11 +120,16 @@
 import WithForm from "@/mixins/WithForm";
 import StatusInput from "@/views/forms/inputs/StatusInput";
 import ImageInput from "@/views/forms/inputs/ImageInput";
+import EpisodeQualityInput from "@/views/forms/inputs/EpisodeQualityInput";
+import EpisodeTypeInput from "@/views/forms/inputs/EpisodeTypeInput";
 import { mapGetters } from "vuex";
 
 const status = ["draft", "published", "deleted", "revision"];
+const episodeTypes = ["episode", "ova", "movie", "special"];
+const episodeQualities = ["bluray", "hdtv", "dvd"];
+
 export default {
-  name: "SeriesForm",
+  name: "EpisodeForm",
 
   mixins: [
     WithForm(function defaultForm() {
@@ -120,16 +137,28 @@ export default {
         coverId: null,
         title: "",
         slug: "",
-        synopsis: "",
-        status: "draft"
+        status: "draft",
+        number: "",
+        links: {
+          mp4: [],
+          hd: [],
+          fullHd: []
+        },
+        type: "episode",
+        quality: "hdtv"
       };
     })
   ],
 
-  components: { StatusInput, ImageInput },
+  components: {
+    StatusInput,
+    ImageInput,
+    EpisodeQualityInput,
+    EpisodeTypeInput
+  },
 
-  createdAlertTitle: "Série criada",
-  updatedAlertTitle: "Série editada",
+  createdAlertTitle: "Episódio criado",
+  updatedAlertTitle: "Episódio editado",
 
   validateForm: {
     slug(value) {
@@ -138,7 +167,19 @@ export default {
 
     status(value) {
       return status.includes(value);
+    },
+
+    type(value) {
+      return episodeTypes.includes(value);
+    },
+
+    quality(value) {
+      return episodeQualities.includes(value);
     }
+  },
+
+  props: {
+    series: Object
   },
 
   computed: {
@@ -148,16 +189,17 @@ export default {
   methods: {
     handleCreate(payload) {
       const additionalFields = {
-        authorId: this.currentUser.id
+        authorId: this.currentUser.id,
+        seriesId: this.series.id
       };
-      return this.$axios.post("/series", { ...payload, ...additionalFields });
+      return this.$axios.post("/episodes", { ...payload, ...additionalFields });
     },
 
     handleUpdate(id, payload) {
       const additionalFields = {
         editedById: this.currentUser.id
       };
-      return this.$axios.put("/series/" + id, {
+      return this.$axios.put("/episodes/" + id, {
         ...payload,
         ...additionalFields
       });
@@ -165,5 +207,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

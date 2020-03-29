@@ -33,7 +33,7 @@
 
             <b-pagination
               class="flat pagination-success"
-              @change="value => loadTags(value)"
+              @change="value => loadItems(value)"
               :total-rows="total"
               v-model="page"
               :per-page="perPage"

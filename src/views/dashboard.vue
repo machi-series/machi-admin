@@ -9,18 +9,14 @@
                 <i class="mdi mdi-cube text-danger icon-lg"></i>
               </div>
               <div>
-                <p class="card-text text-right">Total Revenue</p>
+                <p class="card-text text-right">Séries</p>
                 <div class="fluid-container">
                   <h3 class="card-title font-weight-bold text-right mb-0">
-                    $65,650
+                    {{ count.series }}
                   </h3>
                 </div>
               </div>
             </div>
-            <p class="text-muted mt-3">
-              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65%
-              lower growth
-            </p>
           </div>
         </div>
       </div>
@@ -32,18 +28,14 @@
                 <i class="mdi mdi-receipt text-warning icon-lg"></i>
               </div>
               <div>
-                <p class="card-text text-right">Orders</p>
+                <p class="card-text text-right">Tags</p>
                 <div class="fluid-container">
                   <h3 class="card-title font-weight-bold text-right mb-0">
-                    3455
+                    {{ count.tags }}
                   </h3>
                 </div>
               </div>
             </div>
-            <p class="text-muted mt-3">
-              <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i>
-              Product-wise sales
-            </p>
           </div>
         </div>
       </div>
@@ -55,18 +47,14 @@
                 <i class="mdi mdi-poll-box text-teal icon-lg"></i>
               </div>
               <div>
-                <p class="card-text text-right">Sales</p>
+                <p class="card-text text-right">Episódios</p>
                 <div class="fluid-container">
                   <h3 class="card-title font-weight-bold text-right mb-0">
-                    5693
+                    {{ count.episodes }}
                   </h3>
                 </div>
               </div>
             </div>
-            <p class="text-muted mt-3">
-              <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly
-              Sales
-            </p>
           </div>
         </div>
       </div>
@@ -78,23 +66,19 @@
                 <i class="mdi mdi-account-location text-info icon-lg"></i>
               </div>
               <div>
-                <p class="card-text text-right">Employees</p>
+                <p class="card-text text-right">Usuários</p>
                 <div class="fluid-container">
                   <h3 class="card-title font-weight-bold text-right mb-0">
-                    246
+                    {{ count.users }}
                   </h3>
                 </div>
               </div>
             </div>
-            <p class="text-muted mt-3">
-              <i class="mdi mdi-reload mr-1" aria-hidden="true"></i>
-              Product-wise sales
-            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div v-if="false" class="row">
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
@@ -216,327 +200,44 @@
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title mb-4">Manage Tickets</h5>
+            <h5 class="card-title mb-4">Atividade</h5>
             <div class="fluid-container">
-              <div class="row ticket-card mt-3 pb-2 border-bottom">
+              <div
+                v-for="(activity, i) in activities"
+                :key="i"
+                class="row ticket-card mt-3 pb-2 border-bottom"
+              >
                 <div class="col-md-1">
                   <img
+                    v-if="activity.user"
                     class="img-sm rounded-circle mb-2 mb-md-0"
-                    src="../assets/images/faces/face1.jpg"
+                    :src="activity.user.email | gravatar({ s: 68 })"
                     alt="profile image"
                   />
                 </div>
-                <div class="ticket-details col-md-9">
+                <div class="ticket-details col-md-11">
                   <div class="d-flex">
                     <p class="text-primary font-weight-bold mr-2 mb-0 no-wrap">
-                      James :
+                      <label
+                        data-v-19c9d02c=""
+                        :class="`badge badge-${activity.badge}`"
+                        >{{ activity.type }}</label
+                      >
                     </p>
-                    <p class="font-weight-medium mr-1 mb-0">[#23047]</p>
                     <p class="font-weight-bold mb-0 ellipsis">
-                      Lorem ipsum dolor sit amet, consectetur.
+                      {{ activity.title }}
                     </p>
                   </div>
-                  <p class="text-small text-gray">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Illum sequi a, nostrum.
-                  </p>
                   <div class="row text-muted d-flex mb-2 mb-md-0">
                     <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Last responded :</p>
-                      <p class="Last-responded mr-2 mb-0">3 hours ago</p>
+                      <p class="mb-0 mr-2">
+                        Edição {{ activity.updatedTimeAgo }}
+                      </p>
                     </div>
                     <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Due in :</p>
-                      <p class="Last-responded mr-2 mb-0">2 Days</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ticket-actions col-md-2">
-                  <div class="btn-group dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-teal dropdown-toggle btn-sm"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Manage
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-reply fa-fw"></i>Quick reply</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-history fa-fw"></i>Another action</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-check text-success fa-fw"></i>Resolve
-                        Issue</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-times text-danger fa-fw"></i>Close
-                        Issue</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row ticket-card mt-3 pb-2 border-bottom">
-                <div class="col-md-1">
-                  <img
-                    class="img-sm rounded-circle mb-2 mb-md-0"
-                    src="../assets/images/faces/face2.jpg"
-                    alt="profile image"
-                  />
-                </div>
-                <div class="ticket-details col-md-9">
-                  <div class="d-flex">
-                    <p class="text-primary font-weight-bold mr-2 mb-0 no-wrap">
-                      Stella :
-                    </p>
-                    <p class="font-weight-medium mr-1 mb-0">[#23135]</p>
-                    <p class="font-weight-bold mb-0 ellipsis">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Sapiente.
-                    </p>
-                  </div>
-                  <p class="text-small text-gray">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Excepturi voluptates fuga quae?
-                  </p>
-                  <div class="row text-muted d-flex mb-2 mb-md-0">
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Last responded :</p>
-                      <p class="Last-responded mr-2 mb-0">3 hours ago</p>
-                    </div>
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Due in :</p>
-                      <p class="Last-responded mr-2 mb-0">2 Days</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ticket-actions col-md-2">
-                  <div class="btn-group dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-teal dropdown-toggle btn-sm"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Manage
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-reply fa-fw"></i>Quick reply</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-history fa-fw"></i>Another action</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-check text-success fa-fw"></i>Resolve
-                        Issue</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-times text-danger fa-fw"></i>Close
-                        Issue</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row ticket-card mt-3 pb-2 border-bottom">
-                <div class="col-md-1">
-                  <img
-                    class="img-sm rounded-circle mb-2 mb-md-0"
-                    src="../assets/images/faces/face3.jpg"
-                    alt="profile image"
-                  />
-                </div>
-                <div class="ticket-details col-md-9">
-                  <div class="d-flex">
-                    <p class="text-primary font-weight-bold mr-2 mb-0 no-wrap">
-                      John Doe :
-                    </p>
-                    <p class="font-weight-medium mr-1 mb-0">[#23246]</p>
-                    <p class="font-weight-bold mb-0 ellipsis">
-                      Lorem ipsum dolor sit amet.
-                    </p>
-                  </div>
-                  <p class="text-small text-gray">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                  <div class="row text-muted d-flex mb-2 mb-md-0">
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Last responded :</p>
-                      <p class="Last-responded mr-2 mb-0">3 hours ago</p>
-                    </div>
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Due in :</p>
-                      <p class="Last-responded mr-2 mb-0">2 Days</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ticket-actions col-md-2">
-                  <div class="btn-group dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-teal dropdown-toggle btn-sm"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Manage
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-reply fa-fw"></i>Quick reply</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-history fa-fw"></i>Another action</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-check text-success fa-fw"></i>Resolve
-                        Issue</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-times text-danger fa-fw"></i>Close
-                        Issue</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row ticket-card mt-3 pb-2 border-bottom">
-                <div class="col-md-1">
-                  <img
-                    class="img-sm rounded-circle mb-2 mb-md-0"
-                    src="../assets/images/faces/face4.jpg"
-                    alt="profile image"
-                  />
-                </div>
-                <div class="ticket-details col-md-9">
-                  <div class="d-flex">
-                    <p class="text-primary font-weight-bold mr-2 mb-0 no-wrap">
-                      Marques Brownlee :
-                    </p>
-                    <p class="font-weight-medium mr-1 mb-0">[#23047]</p>
-                    <p class="font-weight-bold mb-0 ellipsis">
-                      Lorem ipsum dolor sit amet, consectetur.
-                    </p>
-                  </div>
-                  <p class="text-small text-gray">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Illum sequi a, nostrum.
-                  </p>
-                  <div class="row text-muted d-flex mb-2 mb-md-0">
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Last responded :</p>
-                      <p class="Last-responded mr-2 mb-0">3 hours ago</p>
-                    </div>
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Due in :</p>
-                      <p class="Last-responded mr-2 mb-0">2 Days</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ticket-actions col-md-2">
-                  <div class="btn-group dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-teal dropdown-toggle btn-sm"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Manage
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-reply fa-fw"></i>Quick reply</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-history fa-fw"></i>Another action</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-check text-success fa-fw"></i>Resolve
-                        Issue</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-times text-danger fa-fw"></i>Close
-                        Issue</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row ticket-card mt-3 pb-2">
-                <div class="col-md-1">
-                  <img
-                    class="img-sm rounded-circle mb-2 mb-md-0"
-                    src="../assets/images/faces/face5.jpg"
-                    alt="profile image"
-                  />
-                </div>
-                <div class="ticket-details col-md-9">
-                  <div class="d-flex">
-                    <p class="text-primary font-weight-bold mr-2 mb-0 no-wrap">
-                      Marina John :
-                    </p>
-                    <p class="font-weight-medium mr-1 mb-0">[#23034]</p>
-                    <p class="font-weight-bold mb-0 ellipsis">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Quasi amet totam, dignissimos fugiat voluptates, ab magni,
-                      necessitatibus excepturi inventore, mollitia ipsa quaerat
-                      aliquam.
-                    </p>
-                  </div>
-                  <p class="text-small text-gray">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Recusandae animi omnis, a?
-                  </p>
-                  <div class="row text-muted d-flex mb-2 mb-md-0">
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Last responded :</p>
-                      <p class="Last-responded mr-2 mb-0">3 hours ago</p>
-                    </div>
-                    <div class="col-xl-4 d-sm-flex">
-                      <p class="mb-0 mr-2">Due in :</p>
-                      <p class="Last-responded mr-2 mb-0">2 Days</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ticket-actions col-md-2">
-                  <div class="btn-group dropdown">
-                    <button
-                      type="button"
-                      class="btn btn-teal dropdown-toggle btn-sm"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Manage
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-reply fa-fw"></i>Quick reply</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-history fa-fw"></i>Another action</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-check text-success fa-fw"></i>Resolve
-                        Issue</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i class="fa fa-times text-danger fa-fw"></i>Close
-                        Issue</a
-                      >
+                      <p class="mb-0 mr-2">
+                        Criação {{ activity.createdTimeAgo }}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -549,10 +250,100 @@
   </section>
 </template>
 
-<script lang="js">
+<script>
+// import moment from "moment";
+
 export default {
-  name: 'dashboard'
-}
+  name: "Dashboard",
+
+  data() {
+    return {
+      now: new Date(),
+
+      count: {
+        series: null,
+        episodes: null,
+        tags: null,
+        users: null
+      },
+
+      latest: {
+        series: [],
+        episodes: [],
+        tags: [],
+        users: []
+      }
+    };
+  },
+
+  computed: {
+    activities() {
+      const series = this.latest.series.map(s => ({
+        ...s,
+        badge: "primary",
+        type: "Série",
+        user: s.editedBy || s.author,
+        title: s.title
+      }));
+
+      const episodes = this.latest.episodes.map(e => ({
+        ...e,
+        badge: "info",
+        type: "Episódio",
+        user: e.editedBy || e.author,
+        title: e.title
+      }));
+
+      const tags = this.latest.tags.map(t => ({
+        ...t,
+        badge: "success",
+        type: "Tag",
+        user: false,
+        title: t.name
+      }));
+
+      const users = this.latest.users.map(u => ({
+        ...u,
+        badge: "teal",
+        type: "Usuário",
+        user: u,
+        title: u.username
+      }));
+
+      const now = this.$moment(this.now);
+
+      return []
+        .concat(series, episodes, tags, users)
+        .sort(
+          (a, b) =>
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+        )
+        .map(i => ({
+          ...i,
+          updatedTimeAgo: this.$moment.utc(i.updated_at).from(now),
+          createdTimeAgo: this.$moment.utc(i.created_at).from(now)
+        }));
+    }
+  },
+
+  async created() {
+    await Promise.all(
+      ["series", "episodes", "tags", "users"].map(key =>
+        this.$axios
+          .get(`/${key}`, {
+            params: {
+              order: "updated_at",
+              direction: "desc"
+            }
+          })
+          .then(({ data: pagination }) => {
+            this.count[key] = +pagination.total;
+            this.latest[key] = pagination.data;
+          })
+      )
+    );
+  }
+};
 </script>
 
 <style scoped lang="scss"></style>

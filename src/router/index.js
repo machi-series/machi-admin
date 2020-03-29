@@ -7,6 +7,7 @@ import dashboard from "../views/dashboard";
 import Users from "../views/Users";
 import Tags from "../views/Tags";
 import Series from "../views/Series";
+import SeriesEpisodes from "../views/SeriesEpisodes";
 
 // Widgets
 import widgets from "../views/widgets";
@@ -64,6 +65,11 @@ const router = new Router({
       component: Series
     },
     {
+      path: "/series/:seriesId/episodes",
+      name: "seriesEpisodes",
+      component: SeriesEpisodes
+    },
+    {
       path: "/widgets",
       name: "widgets",
       component: widgets
@@ -72,13 +78,13 @@ const router = new Router({
       path: "/404",
       name: "error-404",
       component: error404,
-      meta: { isGuestRoute: true }
+      meta: { ignoreRouterRule: true }
     },
     {
       path: "/500",
       name: "error-500",
       component: error500,
-      meta: { isGuestRoute: true }
+      meta: { ignoreRouterRules: true }
     },
     {
       path: "/login",
@@ -186,7 +192,15 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters["auth/isLoggedIn"];
   const isAdmin = store.getters["auth/isAdmin"];
-  const { isGuestRoute = false, isAdminRoute = false } = to.meta;
+  const {
+    ignoreRouterRules = false,
+    isGuestRoute = false,
+    isAdminRoute = false
+  } = to.meta;
+
+  if (ignoreRouterRules) {
+    return next();
+  }
 
   if (isGuestRoute && isLoggedIn) {
     return next({ name: "dashboard" });

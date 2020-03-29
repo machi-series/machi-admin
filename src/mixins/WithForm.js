@@ -145,25 +145,27 @@ const WithForm = defaultForm => {
           });
       },
 
-      onCreated({ data: tag }) {
+      onCreated({ data: item }) {
         const title = this.$options.createdAlertTitle || "Criado";
         this.resetForm();
         this.$swal("💪 Sucesso", title, "success").then(() => {
-          this.$emit("created", tag);
+          this.$emit("created", item);
         });
         setTimeout(() => {
           this.$swal.close();
         }, 1500);
+        return item;
       },
 
-      onUpdate({ data: tag }) {
+      onUpdate({ data: item }) {
         const title = this.$options.updatedAlertTitle || "Editado";
         this.resetForm();
-        this.$emit("updated", tag);
+        this.$emit("updated", item);
         this.$swal("💪 Sucesso", title, "success");
         setTimeout(() => {
           this.$swal.close();
         }, 1500);
+        return item;
       },
 
       onError(err) {

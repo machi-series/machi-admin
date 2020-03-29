@@ -5,10 +5,7 @@
         <li class="nav-item nav-profile">
           <div class="nav-link">
             <div class="profile-image">
-              <img
-                :src="currentUser.email | gravatar({ s: 100 })"
-                alt="image"
-              />
+              <img :src="currentUser | avatar" alt="image" />
               <span class="online-status online"></span>
             </div>
             <div class="profile-name">

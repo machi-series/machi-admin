@@ -12,25 +12,33 @@
                   <h1 class="display-1 mb-0">404</h1>
                 </div>
                 <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
-                  <h2>SORRY!</h2>
+                  <h2>😨 Opa!</h2>
                   <h3 class="font-weight-light">
-                    The page you’re looking for was not found.
+                    Essa página não existe.
                   </h3>
                 </div>
               </div>
               <div class="row mt-5">
                 <div class="col-12 text-center mt-xl-2">
-                  <a
-                    class="text-white font-weight-medium"
-                    href="../../index.html"
-                    >Back to home</a
-                  >
+                  <router-link class="text-white font-weight-medium" to="/">
+                    Voltar ao início
+                  </router-link>
                 </div>
               </div>
               <div class="row mt-5">
                 <div class="col-12 mt-xl-2">
                   <p class="text-white font-weight-medium text-center">
-                    Copyright &copy; 2018 All rights reserved.
+                    <span
+                      class="d-block text-center text-sm-left d-sm-inline-block"
+                      >Machi Series. Copyright © {{ new Date().getFullYear() }}
+                      <a
+                        href="https://www.github.com/lubien"
+                        target="_blank"
+                        class="text-muted"
+                      >
+                        <i class="mdi mdi-github-circle"></i> Lubien </a
+                      >. All rights reserved.</span
+                    >
                   </p>
                 </div>
               </div>

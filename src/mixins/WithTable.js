@@ -15,10 +15,14 @@ const WithTable = endpoint => {
     computed: {},
 
     methods: {
-      async loadItems(page) {
-        const { data: pagination } = await this.$axios.get(
-          `/${endpoint}?page=${page}`
-        );
+      async loadItems(page = this.page) {
+        const params = {
+          page,
+          ...(this.customLoadParams || {})
+        };
+        const { data: pagination } = await this.$axios.get(`/${endpoint}`, {
+          params
+        });
 
         this.items = pagination.data;
         this.page = +pagination.page;
@@ -28,7 +32,7 @@ const WithTable = endpoint => {
       },
 
       onCreated() {
-        this.loadItems(this.lastPage);
+        this.loadItems(Math.max(1, +this.lastPage));
       },
 
       onUpdated(item) {
@@ -48,6 +52,12 @@ const WithTable = endpoint => {
 
     created() {
       this.loadItems(1);
+    },
+
+    watch: {
+      customLoadParams() {
+        this.loadItems();
+      }
     }
   };
 };

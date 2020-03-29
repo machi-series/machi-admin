@@ -1,8 +1,21 @@
 <template lang="html">
   <section class="tables">
+    <div v-if="series" class="mb-4">
+      <b-card :title="series.title">
+        <b-card-text v-if="series.synopsis">
+          {{ series.synopsis }}
+        </b-card-text>
+
+        <b-button @click.prevent="$router.back()" href="#" variant="primary">
+          Voltar
+        </b-button>
+      </b-card>
+    </div>
+
     <div class="row">
       <div class="col-lg-6 grid-margin">
-        <TagForm
+        <EpisodeForm
+          :series="series"
           :entity="editingEntity"
           @stopEditing="editingEntity = false"
           @created="onCreated"
@@ -47,15 +60,15 @@
 
 <script>
 import WithTable from "@/mixins/WithTable";
-import TagForm from "@/views/forms/TagForm.vue";
+import EpisodeForm from "@/views/forms/EpisodeForm.vue";
 
 export default {
-  name: "Tags",
+  name: "SeriesEpisodes",
 
-  mixins: [WithTable("tags")],
+  mixins: [WithTable("episodes")],
 
   components: {
-    TagForm
+    EpisodeForm
   },
 
   fields: [
@@ -64,8 +77,8 @@ export default {
       label: "ID"
     },
     {
-      key: "name",
-      label: "Nome"
+      key: "title",
+      label: "Título"
     },
     {
       key: "slug",
@@ -75,11 +88,26 @@ export default {
       key: "actions",
       label: "Ações"
     }
-  ]
+  ],
+
+  data() {
+    return { series: null };
+  },
+
+  computed: {
+    customLoadParams() {
+      return { seriesId: Number(this.$route.params.seriesId) };
+    }
+  },
+
+  async created() {
+    try {
+      const { seriesId } = this.$route.params;
+      const { data: series } = await this.$axios.get(`/series/${seriesId}`);
+      this.series = series;
+    } catch (err) {
+      this.$router.push("/404");
+    }
+  }
 };
 </script>
-
-<style scoped lang="scss">
-.tables {
-}
-</style>

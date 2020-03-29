@@ -22,6 +22,16 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <ImageInput
+          v-model="form.avatarId"
+          @input="dirty('avatarId')"
+          :image="entity.avatar"
+          :width="200"
+          :height="200"
+          :params="{ width: 100, height: 100 }"
+          noCircle
+        />
+
         <b-form-group label="Nome">
           <b-form-input
             v-model="form.username"
@@ -90,10 +100,14 @@
 
 <script>
 import WithForm from "@/mixins/WithForm";
+import ImageInput from "@/views/forms/inputs/ImageInput";
+import { mapGetters, mapMutations } from "vuex";
 const roles = ["user", "publisher", "manager", "admin"];
 
 export default {
   name: "UserForm",
+
+  components: { ImageInput },
 
   mixins: [
     WithForm(function defaultForm() {
@@ -101,7 +115,8 @@ export default {
         username: "",
         email: "",
         role: "user",
-        password: ""
+        password: "",
+        avatarId: null
       };
     })
   ],
@@ -140,13 +155,24 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters("auth", ["currentUser"])
+  },
+
   methods: {
+    ...mapMutations("auth", ["setUser"]),
+
     handleCreate(payload) {
       return this.$axios.post("/users", payload);
     },
 
     handleUpdate(id, payload) {
-      return this.$axios.put("/users/" + id, payload);
+      return this.$axios.put("/users/" + id, payload).then(updated => {
+        if (updated.data.id === this.currentUser.id) {
+          this.setUser(updated.data);
+        }
+        return updated;
+      });
     }
   }
 };
