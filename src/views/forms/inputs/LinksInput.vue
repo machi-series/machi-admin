@@ -53,7 +53,7 @@ export default {
     { key: "low", label: "Links de baixa qualidade" },
     { key: "medium", label: "Links de média qualidade" },
     { key: "high", label: "Links de alta qualidade" },
-    { key: "online", label: "Links Online" }
+    { key: "online", label: "Links online" }
   ],
 
   data() {
