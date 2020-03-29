@@ -7,7 +7,7 @@
       label-size="lg"
       label-class="pt-0"
       class="mb-4 mt-4"
-      :label="`Links de ${label} qualidade`"
+      :label="label"
     >
       <b-input-group
         v-for="(link, i) in links[key]"
@@ -50,9 +50,10 @@ export default {
   props: ["value"],
 
   qualities: [
-    { key: "low", label: "baixa" },
-    { key: "medium", label: "média" },
-    { key: "high", label: "alta" }
+    { key: "low", label: "Links de baixa qualidade" },
+    { key: "medium", label: "Links de média qualidade" },
+    { key: "high", label: "Links de alta qualidade" },
+    { key: "online", label: "Links Online" }
   ],
 
   data() {
