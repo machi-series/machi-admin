@@ -83,6 +83,12 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <TagsInput
+          v-model="form.tags"
+          :tags="entity ? entity.tags : []"
+          @input="dirty('tags')"
+        />
+
         <b-button
           type="submit"
           variant="success"
@@ -116,6 +122,7 @@
 import WithForm from "@/mixins/WithForm";
 import StatusInput from "@/views/forms/inputs/StatusInput";
 import ImageInput from "@/views/forms/inputs/ImageInput";
+import TagsInput from "@/views/forms/inputs/TagsInput";
 import { mapGetters } from "vuex";
 
 const status = ["draft", "published", "deleted", "revision"];
@@ -123,18 +130,19 @@ export default {
   name: "SeriesForm",
 
   mixins: [
-    WithForm(function defaultForm() {
+    WithForm(function defaultForm(entity = {}) {
       return {
         coverId: null,
         title: "",
         slug: "",
         synopsis: "",
-        status: "draft"
+        status: "draft",
+        tags: entity.tags ? entity.tags.map(t => t.id) : []
       };
     })
   ],
 
-  components: { StatusInput, ImageInput },
+  components: { StatusInput, ImageInput, TagsInput },
 
   createdAlertTitle: "Série criada",
   updatedAlertTitle: "Série editada",

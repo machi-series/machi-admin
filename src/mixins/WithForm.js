@@ -20,7 +20,7 @@ const WithForm = defaultForm => {
     },
 
     data() {
-      const form = this.$options.defaultForm();
+      const form = this.$options.defaultForm(this.entity || undefined);
       return {
         form,
         isDirty: defaultDirtyForForm(form),
@@ -77,7 +77,7 @@ const WithForm = defaultForm => {
 
     methods: {
       resetForm() {
-        const form = this.$options.defaultForm();
+        const form = this.$options.defaultForm(this.entity || undefined);
         const isDirty = defaultDirtyForForm(this.form);
 
         if (this.entity) {
