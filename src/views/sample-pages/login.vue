@@ -4,7 +4,7 @@
       <div class="row w-100">
         <div class="col-lg-6 mx-auto">
           <div class="auth-form-dark text-left p-5">
-            <h2>AnimesTC</h2>
+            <h2>Machi Series</h2>
             <form class="pt-5">
               <form @submit.prevent="submit">
                 <div class="form-group">
@@ -39,7 +39,13 @@
                   </button>
                 </div>
                 <div class="mt-3 text-center">
-                  <a href="#" class="auth-link text-white">Forgot password?</a>
+                  <a
+                    @click.prevent="forgot"
+                    href="#"
+                    class="auth-link text-white"
+                  >
+                    Esqueceu sua senha?
+                  </a>
                 </div>
               </form>
             </form>
@@ -68,8 +74,43 @@ export default {
     ...mapActions("auth", ["login"]),
 
     async submit() {
-      await this.login(this.credentials);
-      this.$router.push({ name: "dashboard" });
+      try {
+        await this.login(this.credentials);
+        this.$router.push({ name: "dashboard" });
+      } catch (err) {
+        if (err.response && err.response.status === 401) {
+          this.credentials.password = "";
+          return this.$swal("😲", "Credenciais inválidas", "error");
+        }
+        console.error(err);
+        this.$swal("😔", "Algo deu errado", "error");
+      }
+    },
+
+    forgot() {
+      this.$swal({
+        text: "Escreva aqui seu email",
+        content: "input",
+        button: {
+          text: "Pedir!",
+          closeModal: false
+        }
+      })
+        .then(email => {
+          if (!email) throw null;
+
+          return this.$axios.post("/forgot", { email });
+        })
+        .then(() => {
+          return this.$swal("✉️", "Email de recuperação enviado!", "success");
+        })
+        .catch(err => {
+          if (err.response && err.response.status === 404) {
+            return this.$swal("😲", "Email inv'alido", "error");
+          }
+
+          this.$swal("😔", "Algo deu errado", "error");
+        });
     }
   }
 };
