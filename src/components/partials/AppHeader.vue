@@ -9,12 +9,12 @@
     <div
       class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center"
     >
-      <a class="navbar-brand brand-logo" href="/demo/star-admin-vue/"
-        ><img src="../../assets/logo.png" alt="logo"
-      /></a>
-      <a class="navbar-brand brand-logo-mini" href="/demo/star-admin-vue/"
-        ><img src="../../assets/logo-mini.png" alt="logo"
-      /></a>
+      <router-link to="/" class="navbar-brand brand-logo">
+        <img src="../../assets/logo.png" alt="logo" />
+      </router-link>
+      <router-link to="/" class="navbar-brand brand-logo-mini">
+        <img src="../../assets/logo-mini.png" alt="logo" />
+      </router-link>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center ml-auto ml-lg-0">
       <b-navbar-nav class="ml-auto">
@@ -26,7 +26,15 @@
               class="img-xs rounded-circle"
             />
           </template>
-          <b-dropdown-item href="#" class="preview-item flex-wrap">
+          <b-dropdown-item
+            @click.prevent="
+              () => {
+                $router.push({ name: 'profile' });
+              }
+            "
+            href="#"
+            class="preview-item flex-wrap"
+          >
             Profile
           </b-dropdown-item>
           <b-dropdown-item

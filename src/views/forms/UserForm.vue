@@ -1,16 +1,16 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">
+  <div :class="useCard ? 'card' : ''">
+    <div :class="useCard ? 'card-body' : ''">
+      <h4 v-if="showTitle" :class="useCard ? 'card-title' : ''">
         {{ isEditing ? "Editando Usuário" : "Criando Usuário" }}
       </h4>
 
       <form @submit.prevent="submit" class="forms-sample">
-        <b-form-group v-if="entity" :disabled="true" label="ID">
+        <b-form-group v-if="entity && !isProfile" :disabled="true" label="ID">
           <b-form-input :value="entity.id"></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Cargo">
+        <b-form-group v-if="!isProfile" label="Cargo">
           <b-form-select
             v-model="form.role"
             @input="dirty('role')"
@@ -87,7 +87,7 @@
           Reset
         </b-button>
         <b-button
-          v-if="isEditing"
+          v-if="!isProfile && isEditing"
           @click.prevent="stopEditing"
           variant="light"
           class="mr-2"
@@ -110,14 +110,31 @@ export default {
 
   components: { ImageInput },
 
+  props: {
+    useCard: {
+      type: Boolean,
+      default: true
+    },
+
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+
+    isProfile: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   mixins: [
-    WithForm(function defaultForm() {
+    WithForm(function defaultForm(entity = {}) {
       return {
-        username: "",
-        email: "",
+        username: entity.username || "",
+        email: entity.email || "",
         role: "user",
         password: "",
-        avatarId: null
+        avatarId: entity.avatarId || null
       };
     })
   ],

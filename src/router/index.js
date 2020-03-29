@@ -8,6 +8,7 @@ import Users from "../views/Users";
 import Tags from "../views/Tags";
 import Series from "../views/Series";
 import SeriesEpisodes from "../views/SeriesEpisodes";
+import Profile from "../views/Profile";
 
 // Widgets
 import widgets from "../views/widgets";
@@ -62,6 +63,11 @@ const router = new Router({
       path: "/users",
       name: "users",
       component: Users
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile
     },
     {
       path: "/tags",
