@@ -30,23 +30,26 @@
               <StatusInput v-model="form.status" @input="dirty('status')" />
 
               <b-form-invalid-feedback>
-                {{ statusValidation.messages.join(", ") }}
+                {{ statusValidation.messages.join("\n") }}
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <div
-              v-if="coverIdValidation.messages.length"
-              class="invalid-feedback mb-2"
-              style="display: block"
-            >
-              {{ coverIdValidation.messages.join(", ") }}
-            </div>
+            <b-form-group label="Tipo">
+              <SeriesTypeInput v-model="form.type" @input="dirty('type')" />
+
+              <b-form-invalid-feedback>
+                {{ typeValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
 
             <b-form-group label="Título">
               <b-form-input
                 v-model="form.title"
                 @input="dirty('title')"
               ></b-form-input>
+              <b-form-invalid-feedback>
+                {{ titleValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-group label="Slug">
@@ -57,7 +60,7 @@
               ></b-form-input>
 
               <b-form-invalid-feedback>
-                {{ slugValidation.messages.join(", ") }}
+                {{ slugValidation.messages.join("\n") }}
               </b-form-invalid-feedback>
             </b-form-group>
 
@@ -66,12 +69,123 @@
                 id="textarea"
                 v-model="form.synopsis"
                 @input="dirty('synopsis')"
-                :rows="2"
-                :max-rows="3"
+                :rows="3"
+                :max-rows="10"
               ></b-form-textarea>
 
               <b-form-invalid-feedback>
-                {{ slugValidation.messages.join(", ") }}
+                {{ slugValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Episódios">
+              <b-form-input
+                type="number"
+                v-model="form.episodeCount"
+                @input="dirty('episodeCount')"
+                :state="episodeCountValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ episodeCountValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Ano">
+              <b-form-input
+                type="number"
+                v-model="form.year"
+                @input="dirty('year')"
+                :state="yearValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ yearValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Data de lançamento">
+              <b-form-input
+                v-model="form.releaseDate"
+                @input="dirty('releaseDate')"
+                :state="releaseDateValidation.state"
+                placeholder="dd/mm/AAAA"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ releaseDateValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Hora de lançamento">
+              <b-form-input
+                v-model="form.releaseTime"
+                @input="dirty('releaseTime')"
+                :state="releaseTimeValidation.state"
+                placeholder="hh:mm"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ releaseTimeValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Duração de um episódio">
+              <b-form-input
+                type="number"
+                v-model="form.episodeDuration"
+                @input="dirty('episodeDuration')"
+                :state="episodeDurationValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ episodeDurationValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Trailer">
+              <b-form-input
+                v-model="form.trailer"
+                @input="dirty('trailer')"
+                :state="trailerValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ trailerValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Produtor">
+              <b-form-input
+                v-model="form.producer"
+                @input="dirty('producer')"
+                :state="producerValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ producerValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Classificação">
+              <ClassificationInput
+                v-model="form.classification"
+                @input="dirty('classification')"
+              />
+
+              <b-form-invalid-feedback>
+                {{ classificationValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Status de lançamento">
+              <ReleaseStatusInput
+                v-model="form.releaseStatus"
+                @input="dirty('releaseStatus')"
+              />
+
+              <b-form-invalid-feedback>
+                {{ releaseStatusValidation.messages.join("\n") }}
               </b-form-invalid-feedback>
             </b-form-group>
 
@@ -114,6 +228,14 @@
         noCircle
       />
 
+      <div
+        v-if="coverIdValidation.messages.length"
+        class="invalid-feedback mb-2"
+        style="display: block"
+      >
+        {{ coverIdValidation.messages.join("\n") }}
+      </div>
+
       <div class="card mt-4">
         <div class="card-body">
           <TagsInput
@@ -121,6 +243,13 @@
             :tags="entity ? entity.tags : []"
             @input="dirty('tags')"
           />
+        </div>
+        <div
+          v-if="tagsValidation.messages.length"
+          class="invalid-feedback mb-4 ml-4"
+          style="display: block"
+        >
+          {{ tagsValidation.messages.join("\n") }}
         </div>
       </div>
     </div>
@@ -132,6 +261,9 @@ import WithForm from "@/mixins/WithForm";
 import StatusInput from "@/views/forms/inputs/StatusInput";
 import ImageInput from "@/views/forms/inputs/ImageInput";
 import TagsInput from "@/views/forms/inputs/TagsInput";
+import SeriesTypeInput from "@/views/forms/inputs/SeriesTypeInput";
+import ReleaseStatusInput from "@/views/forms/inputs/ReleaseStatusInput";
+import ClassificationInput from "@/views/forms/inputs/ClassificationInput";
 import { mapGetters } from "vuex";
 
 const status = ["draft", "published", "deleted", "revision"];
@@ -146,12 +278,29 @@ export default {
         slug: "",
         synopsis: "",
         status: "draft",
-        tags: entity.tags ? entity.tags.map(t => t.id) : []
+        type: "series",
+        tags: entity.tags ? entity.tags.map(t => t.id) : [],
+        episodeCount: null,
+        year: new Date().getFullYear(),
+        releaseDate: "",
+        releaseTime: "",
+        episodeDuration: 30,
+        trailer: "",
+        producer: "",
+        classification: "open",
+        releaseStatus: "tba"
       };
     })
   ],
 
-  components: { StatusInput, ImageInput, TagsInput },
+  components: {
+    StatusInput,
+    ImageInput,
+    TagsInput,
+    SeriesTypeInput,
+    ReleaseStatusInput,
+    ClassificationInput
+  },
 
   createdAlertTitle: "Série criada",
   updatedAlertTitle: "Série editada",
@@ -163,6 +312,35 @@ export default {
 
     status(value) {
       return status.includes(value);
+    },
+
+    releaseDate(value) {
+      const re = /^\d{2}\/\d{2}\/\d{4}$/;
+      return re.test(value) && Number(value.slice(-4)) > 1900;
+    },
+
+    releaseTime(value) {
+      const re = /^\d{2}:\d{2}$/;
+      if (!re.test(value)) {
+        return false;
+      }
+      const hours = Number(value.slice(0, 2));
+      const minutes = Number(value.slice(-2));
+      return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60;
+    },
+
+    episodeDuration(value) {
+      const n = Number(value);
+      return (
+        /^([0-9])+$/.test(value) &&
+        Number.isFinite(n) &&
+        n > 0 &&
+        Math.ceil(n) === n
+      );
+    },
+
+    trailer(value) {
+      return value.startsWith("http");
     }
   },
 
