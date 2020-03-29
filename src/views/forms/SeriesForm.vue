@@ -42,6 +42,14 @@
           noCircle
         />
 
+        <div
+          v-if="coverIdValidation.messages.length"
+          class="invalid-feedback mb-2"
+          style="display: block"
+        >
+          {{ coverIdValidation.messages.join(", ") }}
+        </div>
+
         <b-form-group label="Título">
           <b-form-input
             v-model="form.title"

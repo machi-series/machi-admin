@@ -29,7 +29,6 @@
           :width="200"
           :height="200"
           :params="{ width: 100, height: 100 }"
-          noCircle
         />
 
         <b-form-group label="Nome">

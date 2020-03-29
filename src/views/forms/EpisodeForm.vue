@@ -36,11 +36,19 @@
           v-model="form.coverId"
           @input="dirty('coverId')"
           :image="entity.cover"
-          :width="220"
-          :height="320"
-          :params="{ width: 220 }"
+          :width="320"
+          :height="190"
+          :params="{ width: 320 }"
           noCircle
         />
+
+        <div
+          v-if="coverIdValidation.messages.length"
+          class="invalid-feedback mb-2"
+          style="display: block"
+        >
+          {{ coverIdValidation.messages.join(", ") }}
+        </div>
 
         <b-form-group label="Título">
           <b-form-input
@@ -87,6 +95,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <LinksInput v-model="form.links" @input="dirty('links')" />
+
         <b-button
           type="submit"
           variant="success"
@@ -120,6 +130,7 @@
 import WithForm from "@/mixins/WithForm";
 import StatusInput from "@/views/forms/inputs/StatusInput";
 import ImageInput from "@/views/forms/inputs/ImageInput";
+import LinksInput from "@/views/forms/inputs/LinksInput";
 import EpisodeQualityInput from "@/views/forms/inputs/EpisodeQualityInput";
 import EpisodeTypeInput from "@/views/forms/inputs/EpisodeTypeInput";
 import { mapGetters } from "vuex";
@@ -140,9 +151,9 @@ export default {
         status: "draft",
         number: "",
         links: {
-          mp4: [],
-          hd: [],
-          fullHd: []
+          low: [],
+          medium: [],
+          high: []
         },
         type: "episode",
         quality: "hdtv"
@@ -153,6 +164,7 @@ export default {
   components: {
     StatusInput,
     ImageInput,
+    LinksInput,
     EpisodeQualityInput,
     EpisodeTypeInput
   },
