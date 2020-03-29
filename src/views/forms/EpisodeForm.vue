@@ -34,14 +34,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <div
-              v-if="coverIdValidation.messages.length"
-              class="invalid-feedback mb-2"
-              style="display: block"
-            >
-              {{ coverIdValidation.messages.join(", ") }}
-            </div>
-
             <b-form-group label="Título">
               <b-form-input
                 v-model="form.title"
@@ -87,6 +79,30 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
+            <b-form-group label="Fonte">
+              <b-form-input
+                v-model="form.source"
+                @input="dirty('source')"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ sourceValidation.messages.join(", ") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Prioridade de ordenação especial">
+              <b-form-input
+                type="number"
+                v-model="form.priority"
+                @input="dirty('priority')"
+                :state="priorityValidation.state"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ priorityValidation.messages.join("\n") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
             <b-button
               type="submit"
               variant="success"
@@ -127,6 +143,14 @@
         noCircle
       />
 
+      <div
+        v-if="coverIdValidation.messages.length"
+        class="invalid-feedback mb-2"
+        style="display: block"
+      >
+        {{ coverIdValidation.messages.join(", ") }}
+      </div>
+
       <div class="card mt-4">
         <div class="card-body">
           <LinksInput v-model="form.links" @input="dirty('links')" />
@@ -160,6 +184,8 @@ export default {
         slug: "",
         status: "draft",
         number: "",
+        source: "",
+        priority: 0,
         links: {
           low: [],
           medium: [],
