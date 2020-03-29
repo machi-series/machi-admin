@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-group label="Tagged input using dropdown">
+    <b-form-group label="Tags">
       <b-form-tags no-outer-focus class="mb-2">
         <template>
           <ul
