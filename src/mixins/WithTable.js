@@ -2,6 +2,7 @@ const WithTable = endpoint => {
   return {
     data() {
       return {
+        search: "",
         page: 1,
         lastPage: 1,
         total: 0,
@@ -17,6 +18,7 @@ const WithTable = endpoint => {
     methods: {
       async loadItems(page = this.page) {
         const params = {
+          search: this.search,
           page,
           ...(this.customLoadParams || {})
         };
@@ -62,6 +64,10 @@ const WithTable = endpoint => {
 
     watch: {
       customLoadParams() {
+        this.loadItems();
+      },
+
+      search() {
         this.loadItems();
       }
     }

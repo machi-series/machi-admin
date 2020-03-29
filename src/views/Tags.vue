@@ -14,6 +14,10 @@
       <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
+            <b-form-group label="Pesquisa">
+              <b-form-input v-model="search" type="text"></b-form-input>
+            </b-form-group>
+
             <b-table
               striped
               hover
