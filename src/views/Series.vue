@@ -23,10 +23,7 @@
             >
               <template v-slot:cell(actions)="data">
                 <b-button-group size="sm">
-                  <b-button
-                    @click="editingEntity = data.item"
-                    variant="primary"
-                  >
+                  <b-button @click="editEntity(data.item)" variant="primary">
                     Editar
                   </b-button>
                   <b-button

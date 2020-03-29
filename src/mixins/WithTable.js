@@ -31,6 +31,12 @@ const WithTable = endpoint => {
         this.perPage = +pagination.perPage;
       },
 
+      editEntity(item) {
+        this.editingEntity = item;
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      },
+
       onCreated() {
         this.loadItems(Math.max(1, +this.lastPage));
       },

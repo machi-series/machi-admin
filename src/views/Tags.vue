@@ -23,7 +23,7 @@
             >
               <template v-slot:cell(actions)="data">
                 <b-button
-                  @click="editingEntity = data.item"
+                  @click="editEntity(data.item)"
                   variant="outline-primary"
                 >
                   Editar
