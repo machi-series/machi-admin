@@ -211,7 +211,7 @@
                   <img
                     v-if="activity.user"
                     class="img-sm rounded-circle mb-2 mb-md-0"
-                    :src="activity.user.email | gravatar({ s: 68 })"
+                    :src="activity.user | avatar"
                     alt="profile image"
                   />
                 </div>

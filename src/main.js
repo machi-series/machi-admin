@@ -5,7 +5,6 @@ import BootstrapVue from "bootstrap-vue";
 import store from "./store";
 import axios from "./axios";
 import VueSwal from "vue-swal";
-import gravatar from "gravatar";
 import VueMoment from "vue-moment";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -37,9 +36,6 @@ Vue.filter("translateRole", function capitalize(role) {
     manager: "Gerente",
     admin: "Administrador"
   }[role];
-});
-Vue.filter("gravatar", function gravatarize(email, options) {
-  return gravatar.url(email, options);
 });
 
 new Vue({
