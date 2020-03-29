@@ -22,14 +22,16 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <ImageInput
-          v-model="form.avatarId"
-          @input="dirty('avatarId')"
-          :image="entity.avatar"
-          :width="200"
-          :height="200"
-          :params="{ width: 100, height: 100 }"
-        />
+        <div class="mt-4 mb-4">
+          <ImageInput
+            v-model="form.avatarId"
+            @input="dirty('avatarId')"
+            :image="entity.avatar"
+            :width="200"
+            :height="200"
+            :params="{ width: 100, height: 100 }"
+          />
+        </div>
 
         <b-form-group label="Nome">
           <b-form-input

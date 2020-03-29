@@ -13,7 +13,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6 grid-margin">
+      <div class="col-lg-12 grid-margin">
         <EpisodeForm
           :series="series"
           :entity="editingEntity"
@@ -24,7 +24,7 @@
         />
       </div>
 
-      <div class="col-lg-6 grid-margin stretch-card">
+      <div class="col-sm-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <b-table

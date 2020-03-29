@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container fluid class="p-4 bg-dark mt-4 mb-4">
+    <b-container fluid class="p-4 bg-dark">
       <b-row>
         <b-col
           style="text-align: center; cursor: pointer"
