@@ -43,6 +43,15 @@ const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   linkActiveClass: "active",
+
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
+
   routes: [
     {
       path: "/",
