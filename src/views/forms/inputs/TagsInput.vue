@@ -35,7 +35,7 @@
             <b-dropdown-form @submit.stop.prevent="() => {}">
               <b-form-group
                 label-for="tag-search-input"
-                label="Search tags"
+                label="Pesquise tags"
                 label-cols-md="auto"
                 class="mb-0"
                 label-size="sm"
@@ -54,16 +54,12 @@
             <b-dropdown-divider></b-dropdown-divider>
 
             <b-dropdown-item-button
-              v-for="tag in loadedTags"
+              v-for="tag in availableTags"
               :key="tag.id"
               @click.prevent="addTag(tag)"
             >
               {{ tag.name }}
             </b-dropdown-item-button>
-
-            <b-dropdown-text v-if="loadedTags.length === 0">
-              Nada encontrado
-            </b-dropdown-text>
           </b-dropdown>
         </template>
       </b-form-tags>
@@ -86,16 +82,18 @@ export default {
   },
 
   computed: {
-    availableOptions() {
-      return this.loadedTags.map(t => t.name);
-    },
-
     searchDesc() {
-      if (this.query && !this.availableOptions.length) {
+      if (this.query && !this.availableTags.length) {
         return "Nenhum resultado";
       }
 
       return "";
+    },
+
+    availableTags() {
+      return this.loadedTags.filter(
+        tag => !this.selectedTags.find(other => other.id === tag.id)
+      );
     }
   },
 
@@ -106,9 +104,7 @@ export default {
           params: { search: this.query }
         })
         .then(({ data: pagination }) => {
-          this.loadedTags = pagination.data.filter(
-            tag => !this.selectedTags.includes(tag.id)
-          );
+          this.loadedTags = pagination.data;
         });
     },
 
