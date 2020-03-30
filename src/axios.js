@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "./store";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3333"
+  baseURL: process.env.VUE_APP_BASE_URL
   // timeout: 10000
   // transformResponse({ data }) {
   //   debugger;

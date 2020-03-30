@@ -82,7 +82,6 @@ export default {
           this.credentials.password = "";
           return this.$swal("😲", "Credenciais inválidas", "error");
         }
-        console.error(err);
         this.$swal("😔", "Algo deu errado", "error");
       }
     },

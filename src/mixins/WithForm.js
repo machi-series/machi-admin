@@ -168,8 +168,7 @@ const WithForm = defaultForm => {
         return item;
       },
 
-      onError(err) {
-        console.error(err);
+      onError() {
         this.$swal("😔", "Algo deu errado", "error");
       }
     },

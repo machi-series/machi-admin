@@ -20,14 +20,14 @@ Vue.filter("capitalize", function capitalize(data) {
   return data[0].toUpperCase() + data.slice(1);
 });
 Vue.filter("image", function capitalize(name) {
-  return "http://localhost:3333/images/" + name;
+  return process.env.VUE_APP_BASE_URL + "/images/" + name;
 });
 Vue.filter("avatar", function capitalize(user) {
   if (!user.avatar) {
     return "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61%3Fs=200";
   }
   const name = user.avatar.originalName;
-  return "http://localhost:3333/images/" + name;
+  return process.env.VUE_APP_BASE_URL + "/images/" + name;
 });
 Vue.filter("translateRole", function capitalize(role) {
   return {

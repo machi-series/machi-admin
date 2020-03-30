@@ -65,7 +65,7 @@ export default {
         .filter(([, value]) => value != null)
         .map(([key, value]) => key + "=" + value)
         .join("&");
-      return `http://localhost:3333/upload?${queryString}`;
+      return `${process.env.VUE_APP_BASE_URL}/upload?${queryString}`;
     },
 
     displayImage() {
@@ -102,9 +102,8 @@ export default {
       this.$emit("input", image.id);
     },
 
-    onCropUploadFail(data) {
+    onCropUploadFail() {
       this.show = false;
-      console.error(data);
       this.$swal("😔", "Algo deu errado", "error");
     }
   },
