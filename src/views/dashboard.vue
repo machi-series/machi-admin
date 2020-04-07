@@ -224,9 +224,13 @@
                         >{{ activity.type }}</label
                       >
                     </p>
-                    <p class="font-weight-bold mb-0 ellipsis">
+                    <component
+                      :is="activity.url ? 'router-link' : 'p'"
+                      class="font-weight-bold mb-0 ellipsis"
+                      :to="activity.url"
+                    >
                       {{ activity.title }}
-                    </p>
+                    </component>
                   </div>
                   <div class="row text-muted d-flex mb-2 mb-md-0">
                     <div class="col-xl-4 d-sm-flex">
@@ -283,7 +287,8 @@ export default {
         badge: "primary",
         type: "Série",
         user: s.editedBy || s.author,
-        title: s.title
+        title: s.title,
+        url: `/series/${s.id}`
       }));
 
       const episodes = this.latest.episodes.map(e => ({
@@ -291,7 +296,8 @@ export default {
         badge: "info",
         type: "Episódio",
         user: e.editedBy || e.author,
-        title: e.title
+        title: e.title,
+        url: `/series/${e.seriesId}/episodes/${e.id}`
       }));
 
       const tags = this.latest.tags.map(t => ({
