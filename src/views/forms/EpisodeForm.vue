@@ -189,7 +189,8 @@ export default {
         links: {
           low: [],
           medium: [],
-          high: []
+          high: [],
+          online: []
         },
         type: "episode",
         quality: "hdtv"
