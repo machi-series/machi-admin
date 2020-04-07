@@ -18,8 +18,8 @@ export const mutations = {
 };
 
 export const getters = {
-  isLoggedIn({ token }) {
-    return !!token;
+  isLoggedIn({ token, user }) {
+    return !!token && !!user;
   },
 
   currentUser({ user }) {
@@ -28,6 +28,14 @@ export const getters = {
 
   isAdmin({ user }) {
     return user && user.role === "admin";
+  },
+
+  isManager({ user }) {
+    return user && ["admin", "manager"].includes(user.role);
+  },
+
+  isSpy({ user }) {
+    return user && user.role === "user";
   }
 };
 
@@ -38,7 +46,11 @@ export const actions = {
       .then(async ({ data: { token } }) => {
         commit("setToken", token);
         const { data: user } = await axios.get("/me");
+        if (user.role === "user") {
+          commit("setToken", false);
+        }
         commit("setUser", user);
+        return user;
       });
   },
 
