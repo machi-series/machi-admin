@@ -19,7 +19,7 @@ export const mutations = {
 
 export const getters = {
   isLoggedIn({ token, user }) {
-    return !!token && !!user;
+    return !!token && !!user && user.role !== "user";
   },
 
   currentUser({ user }) {
