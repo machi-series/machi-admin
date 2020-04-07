@@ -1,16 +1,6 @@
 <template lang="html">
   <section class="tables">
     <div class="row">
-      <div class="col-lg-12 grid-margin">
-        <SeriesForm
-          :entity="editingEntity"
-          @stopEditing="editingEntity = false"
-          @created="onCreated"
-          @updated="onUpdated"
-          @delete="onDeleted"
-        />
-      </div>
-
       <div class="col-sm-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -27,7 +17,7 @@
             >
               <template v-slot:cell(actions)="data">
                 <b-button-group size="sm">
-                  <b-button @click="editEntity(data.item)" variant="primary">
+                  <b-button :to="`/series/${data.item.id}`" variant="primary">
                     Editar
                   </b-button>
                   <b-button
@@ -44,8 +34,7 @@
 
             <b-pagination
               class="flat pagination-success"
-              @change="value => loadItems(value)"
-              :total-rows="total"
+              :total-rows="Math.max(page + 1, total)"
               v-model="page"
               :per-page="perPage"
             ></b-pagination>
@@ -58,16 +47,11 @@
 
 <script>
 import WithTable from "@/mixins/WithTable";
-import SeriesForm from "@/views/forms/SeriesForm.vue";
 
 export default {
   name: "Series",
 
   mixins: [WithTable("series")],
-
-  components: {
-    SeriesForm
-  },
 
   fields: [
     {

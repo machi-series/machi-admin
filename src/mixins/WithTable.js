@@ -1,11 +1,14 @@
 const WithTable = endpoint => {
   return {
     data() {
+      const search = this.$route.query.search || "";
+      const page = Number(this.$route.query.page) || 1;
+
       return {
-        search: "",
-        page: 1,
+        search,
+        page,
         lastPage: 1,
-        total: 0,
+        total: 10000,
         perPage: 20,
         items: [],
 
@@ -17,9 +20,12 @@ const WithTable = endpoint => {
 
     methods: {
       async loadItems(page = this.page) {
+        this.page = page;
+
         const params = {
           search: this.search,
           page,
+          direction: "desc",
           ...(this.customLoadParams || {})
         };
         const { data: pagination } = await this.$axios.get(`/${endpoint}`, {
@@ -31,6 +37,12 @@ const WithTable = endpoint => {
         this.lastPage = +pagination.lastPage;
         this.total = +pagination.total;
         this.perPage = +pagination.perPage;
+
+        this.$router.replace({
+          query: { page: this.page, search: this.search }
+        });
+        // this.$route.query.page = page;
+        // this.$route.query.search = this.search;
       },
 
       editEntity(item) {
@@ -59,7 +71,7 @@ const WithTable = endpoint => {
     },
 
     created() {
-      this.loadItems(1);
+      this.loadItems();
     },
 
     watch: {
@@ -68,6 +80,10 @@ const WithTable = endpoint => {
       },
 
       search() {
+        this.loadItems();
+      },
+
+      page() {
         this.loadItems();
       }
     }

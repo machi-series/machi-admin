@@ -7,6 +7,8 @@ import dashboard from "../views/dashboard";
 import Users from "../views/Users";
 import Tags from "../views/Tags";
 import Series from "../views/Series";
+import EditSeries from "../views/EditSeries";
+import EditEpisode from "../views/EditEpisode";
 import SeriesEpisodes from "../views/SeriesEpisodes";
 import Profile from "../views/Profile";
 
@@ -75,9 +77,24 @@ const router = new Router({
       component: Tags
     },
     {
+      path: "/series/:id",
+      name: "editSeries",
+      component: EditSeries
+    },
+    {
       path: "/series",
       name: "series",
       component: Series
+    },
+    {
+      path: "/episodes",
+      name: "episodes",
+      component: SeriesEpisodes
+    },
+    {
+      path: "/series/:seriesId/episodes/:id",
+      name: "editEpisodes",
+      component: EditEpisode
     },
     {
       path: "/series/:seriesId/episodes",

@@ -1,29 +1,12 @@
 <template lang="html">
   <section class="tables">
-    <div v-if="series" class="mb-4">
-      <b-card :title="series.title">
-        <b-card-text v-if="series.synopsis">
-          {{ series.synopsis }}
-        </b-card-text>
-
-        <b-button @click.prevent="$router.back()" href="#" variant="primary">
-          Voltar
-        </b-button>
-      </b-card>
-    </div>
+    <SeriesShortCard
+      v-if="$route.params.seriesId && series"
+      :series="series"
+      :use-go-back="true"
+    />
 
     <div class="row">
-      <div class="col-lg-12 grid-margin">
-        <EpisodeForm
-          :series="series"
-          :entity="editingEntity"
-          @stopEditing="editingEntity = false"
-          @created="onCreated"
-          @updated="onUpdated"
-          @delete="onDeleted"
-        />
-      </div>
-
       <div class="col-sm-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -40,8 +23,8 @@
             >
               <template v-slot:cell(actions)="data">
                 <b-button
-                  @click="editEntity(data.item)"
                   variant="outline-primary"
+                  :to="`/series/${data.item.seriesId}/episodes/${data.item.id}`"
                 >
                   Editar
                 </b-button>
@@ -50,8 +33,7 @@
 
             <b-pagination
               class="flat pagination-success"
-              @change="value => loadItems(value)"
-              :total-rows="total"
+              :total-rows="Math.max(page + 1, total)"
               v-model="page"
               :per-page="perPage"
             ></b-pagination>
@@ -63,17 +45,17 @@
 </template>
 
 <script>
+import SeriesShortCard from "@/components/SeriesShortCard.vue";
 import WithTable from "@/mixins/WithTable";
-import EpisodeForm from "@/views/forms/EpisodeForm.vue";
 
 export default {
   name: "SeriesEpisodes",
 
-  mixins: [WithTable("episodes")],
-
   components: {
-    EpisodeForm
+    SeriesShortCard
   },
+
+  mixins: [WithTable("episodes")],
 
   fields: [
     {
@@ -100,17 +82,20 @@ export default {
 
   computed: {
     customLoadParams() {
-      return { seriesId: Number(this.$route.params.seriesId) };
+      return { seriesId: Number(this.$route.params.seriesId) || undefined };
     }
   },
 
   async created() {
     try {
       const { seriesId } = this.$route.params;
+      if (!seriesId) {
+        return;
+      }
       const { data: series } = await this.$axios.get(`/series/${seriesId}`);
       this.series = series;
     } catch (err) {
-      this.$router.push("/404");
+      // ...
     }
   }
 };

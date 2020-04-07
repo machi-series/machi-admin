@@ -252,6 +252,8 @@
           {{ tagsValidation.messages.join("\n") }}
         </div>
       </div>
+
+      <slot name="after-sidebar"></slot>
     </div>
   </div>
 </template>
@@ -272,14 +274,14 @@ export default {
 
   mixins: [
     WithForm(function defaultForm(entity = {}) {
-      return {
+      const defaults = {
         coverId: null,
         title: "",
         slug: "",
         synopsis: "",
         status: "draft",
         type: "series",
-        tags: entity.tags ? entity.tags.map(t => t.id) : [],
+
         episodeCount: null,
         year: new Date().getFullYear(),
         releaseDate: "",
@@ -290,6 +292,10 @@ export default {
         classification: "open",
         releaseStatus: "tba"
       };
+
+      return Object.assign(defaults, {
+        tags: entity.tags ? entity.tags.map(t => t.id) : []
+      });
     })
   ],
 

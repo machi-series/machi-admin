@@ -30,10 +30,43 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/series">
+          <span class="nav-link" v-b-toggle="'series-toggle'">
             <i class="mdi mdi-laptop menu-icon"></i>
             <span class="menu-title">Séries</span>
-          </router-link>
+            <i class="menu-arrow"></i>
+          </span>
+
+          <b-collapse id="series-toggle">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/series/" exact>
+                  Lista
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/series/new">
+                  Nova
+                </router-link>
+              </li>
+            </ul>
+          </b-collapse>
+        </li>
+        <li class="nav-item">
+          <span class="nav-link" v-b-toggle="'episodes-toggle'">
+            <i class="mdi mdi-laptop menu-icon"></i>
+            <span class="menu-title">Episódios</span>
+            <i class="menu-arrow"></i>
+          </span>
+
+          <b-collapse id="episodes-toggle">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/episodes/" exact>
+                  Lista
+                </router-link>
+              </li>
+            </ul>
+          </b-collapse>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/tags">
