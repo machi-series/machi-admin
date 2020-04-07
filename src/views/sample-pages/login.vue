@@ -71,7 +71,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["login"]),
+    ...mapActions("auth", ["login", "logout"]),
 
     async submit() {
       try {
@@ -105,7 +105,7 @@ export default {
         })
         .catch(err => {
           if (err.response && err.response.status === 404) {
-            return this.$swal("😲", "Email inv'alido", "error");
+            return this.$swal("😲", "Email inválido", "error");
           }
 
           this.$swal("😔", "Algo deu errado", "error");
