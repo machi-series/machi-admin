@@ -23,7 +23,7 @@
             /><span class="menu-title">Dashboard</span></router-link
           >
         </li>
-        <li class="nav-item">
+        <li v-if="isAdmin" class="nav-item">
           <router-link class="nav-link" to="/users">
             <i class="mdi mdi-account-multiple menu-icon"></i>
             <span class="menu-title">Usuários</span>
@@ -85,12 +85,7 @@ export default {
   name: "AppSidebar",
 
   computed: {
-    ...mapGetters("auth", ["isLoggedIn", "currentUser"])
+    ...mapGetters("auth", ["isLoggedIn", "currentUser", "isAdmin"])
   }
 };
 </script>
-
-<style scoped lang="scss">
-.app-sidebar {
-}
-</style>

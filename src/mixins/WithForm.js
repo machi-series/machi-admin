@@ -145,6 +145,39 @@ const WithForm = defaultForm => {
           });
       },
 
+      confirmDelete() {
+        this.$swal({
+          title: "Certeza?",
+          text: "Essa operação não tem volta!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true
+        }).then(willDelete => {
+          if (willDelete) {
+            this.doDelete();
+            // swal("Poof! Your imaginary file has been deleted!", {
+            //   icon: "success"
+            // });
+          }
+        });
+      },
+
+      doDelete() {
+        return this.handleDelete(this.entity.id)
+          .then(async () => {
+            this.$swal(this.$options.deletedAlertTitle || "Deletado", {
+              icon: "success"
+            }).then(() => {
+              this.stopEditing();
+              this.$emit("delete", this.entity);
+            });
+            setTimeout(() => {
+              this.$swal.close();
+            }, 1500);
+          })
+          .catch(() => this.onError());
+      },
+
       onCreated({ data: item }) {
         const title = this.$options.createdAlertTitle || "Criado";
         this.resetForm();

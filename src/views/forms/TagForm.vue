@@ -46,6 +46,14 @@
           Reset
         </b-button>
         <b-button
+          v-if="isEditing && isManager"
+          @click.prevent="confirmDelete"
+          variant="danger"
+          class="mr-2"
+        >
+          Deletar
+        </b-button>
+        <b-button
           v-if="isEditing"
           @click.prevent="stopEditing"
           variant="light"
@@ -60,6 +68,7 @@
 
 <script>
 import WithForm from "@/mixins/WithForm";
+import { mapGetters } from "vuex";
 
 export default {
   name: "TagForm",
@@ -82,6 +91,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters("auth", ["isManager"])
+  },
+
   methods: {
     handleCreate(payload) {
       return this.$axios.post("/tags", payload);
@@ -89,6 +102,10 @@ export default {
 
     handleUpdate(id, payload) {
       return this.$axios.put("/tags/" + id, payload);
+    },
+
+    handleDelete(id) {
+      return this.$axios.delete("/tags/" + id);
     }
   }
 };

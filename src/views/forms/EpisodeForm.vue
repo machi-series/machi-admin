@@ -120,12 +120,12 @@
               Reset
             </b-button>
             <b-button
-              v-if="isEditing"
-              @click.prevent="stopEditing"
-              variant="light"
+              v-if="isEditing && isManager"
+              @click.prevent="confirmDelete"
+              variant="danger"
               class="mr-2"
             >
-              Parar de Editar
+              Deletar
             </b-button>
           </form>
         </div>
@@ -232,7 +232,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("auth", ["currentUser"])
+    ...mapGetters("auth", ["currentUser", "isManager"])
   },
 
   methods: {
@@ -252,6 +252,10 @@ export default {
         ...payload,
         ...additionalFields
       });
+    },
+
+    handleDelete(id) {
+      return this.$axios.delete("/episodes/" + id);
     }
   }
 };

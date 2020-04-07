@@ -174,7 +174,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("auth", ["currentUser"])
+    ...mapGetters("auth", ["currentUser", "isAdmin"])
   },
 
   methods: {
@@ -191,6 +191,10 @@ export default {
         }
         return updated;
       });
+    },
+
+    handleDelete(id) {
+      return this.$axios.delete("/users/" + id);
     }
   }
 };

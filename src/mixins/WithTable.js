@@ -7,8 +7,8 @@ const WithTable = endpoint => {
       return {
         search,
         page,
-        lastPage: 1,
-        total: 10000,
+        lastPage: 10000000000 / 20,
+        total: 10000000000,
         perPage: 20,
         items: [],
 
@@ -41,8 +41,6 @@ const WithTable = endpoint => {
         this.$router.replace({
           query: { page: this.page, search: this.search }
         });
-        // this.$route.query.page = page;
-        // this.$route.query.search = this.search;
       },
 
       editEntity(item) {
@@ -66,7 +64,7 @@ const WithTable = endpoint => {
       },
 
       onDeleted() {
-        this.loadItems(this.page);
+        this.loadItems();
       }
     },
 

@@ -80,7 +80,7 @@ export default {
     },
 
     onDeleted() {
-      return this.$router.push(`/series/${this.series.id}/episodes/`);
+      return this.$router.go(-1);
     }
   }
 };

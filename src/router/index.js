@@ -64,7 +64,8 @@ const router = new Router({
     {
       path: "/users",
       name: "users",
-      component: Users
+      component: Users,
+      meta: { isAdminRoute: true }
     },
     {
       path: "/profile",
