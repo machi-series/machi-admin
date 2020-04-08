@@ -37,6 +37,12 @@
 <script>
 import SeriesForm from "@/views/forms/SeriesForm.vue";
 
+const data = () => ({
+  loading: true,
+  isNew: true,
+  editingEntity: false
+});
+
 export default {
   name: "EditSeries",
 
@@ -44,30 +50,30 @@ export default {
     SeriesForm
   },
 
-  data() {
-    return {
-      loading: true,
-      isNew: true,
-      editingEntity: false
-    };
-  },
+  data,
 
   created() {
-    if (this.$route.params.id !== "new") {
-      this.isNew = false;
-      return this.$axios
-        .get(`/series/${this.$route.params.id}`)
-        .then(({ data }) => {
-          this.editingEntity = data;
-        })
-        .catch(() => this.$router.push({ name: "error-404" }))
-        .finally(() => (this.loading = false));
-    }
-
-    this.loading = false;
+    this.initialize();
   },
 
   methods: {
+    initialize() {
+      Object.assign(this, data());
+
+      if (this.$route.params.id !== "new") {
+        this.isNew = false;
+        return this.$axios
+          .get(`/series/${this.$route.params.id}`)
+          .then(({ data }) => {
+            this.editingEntity = data;
+          })
+          .catch(() => this.$router.push({ name: "error-404" }))
+          .finally(() => (this.loading = false));
+      }
+
+      this.loading = false;
+    },
+
     onCreated(item) {
       return this.$router.push(`/series/${item.id}`);
     },
@@ -78,6 +84,12 @@ export default {
 
     onDeleted() {
       return this.$router.push("/series/");
+    }
+  },
+
+  watch: {
+    "$route.params.id"() {
+      this.initialize();
     }
   }
 };
