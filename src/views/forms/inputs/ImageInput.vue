@@ -16,7 +16,7 @@
           ></b-img>
 
           <b-button v-else variant="light">
-            <i class="mdi mdi-camera"></i>
+            <i class="mdi mdi-camera" style="margin-right: 0"></i>
           </b-button>
         </b-col>
       </b-row>
