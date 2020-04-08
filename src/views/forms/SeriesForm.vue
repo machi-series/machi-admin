@@ -117,32 +117,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-group label="Hora de lançamento">
-              <b-form-input
-                v-model="form.releaseTime"
-                @input="dirty('releaseTime')"
-                :state="releaseTimeValidation.state"
-                placeholder="hh:mm"
-              ></b-form-input>
-
-              <b-form-invalid-feedback>
-                {{ releaseTimeValidation.messages.join("\n") }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <b-form-group label="Duração de um episódio">
-              <b-form-input
-                type="number"
-                v-model="form.episodeDuration"
-                @input="dirty('episodeDuration')"
-                :state="episodeDurationValidation.state"
-              ></b-form-input>
-
-              <b-form-invalid-feedback>
-                {{ episodeDurationValidation.messages.join("\n") }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-
             <b-form-group label="Trailer">
               <b-form-input
                 v-model="form.trailer"
@@ -253,6 +227,47 @@
         </div>
       </div>
 
+      <b-card title="Transmissão" class="mt-4 mb-4">
+        <b-form-group label="Hora de lançamento">
+          <b-form-input
+            v-model="form.releaseTime"
+            @input="dirty('releaseTime')"
+            :state="releaseTimeValidation.state"
+            placeholder="hh:mm"
+          ></b-form-input>
+
+          <b-form-invalid-feedback>
+            {{ releaseTimeValidation.messages.join("\n") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label="Dia da semana de lançamento">
+          <b-form-select
+            v-model="form.weekDay"
+            :options="$options.weekDayOptions"
+            @input="dirty('weekDay')"
+            :state="weekDayValidation.state"
+          ></b-form-select>
+
+          <b-form-invalid-feedback>
+            {{ weekDayValidation.messages.join("\n") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label="Duração de um episódio">
+          <b-form-input
+            type="number"
+            v-model="form.episodeDuration"
+            @input="dirty('episodeDuration')"
+            :state="episodeDurationValidation.state"
+          ></b-form-input>
+
+          <b-form-invalid-feedback>
+            {{ episodeDurationValidation.messages.join("\n") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </b-card>
+
       <slot name="after-sidebar"></slot>
     </div>
   </div>
@@ -283,6 +298,7 @@ export default {
         type: "series",
 
         episodeCount: null,
+        weekDay: null,
         year: new Date().getFullYear(),
         releaseDate: "",
         releaseTime: "",
@@ -297,6 +313,17 @@ export default {
         tags: entity.tags ? entity.tags.map(t => t.id) : []
       });
     })
+  ],
+
+  weekDayOptions: [
+    { value: null, text: "Não especificado" },
+    { value: 0, text: "Domingo" },
+    { value: 1, text: "Segunda" },
+    { value: 2, text: "Terça" },
+    { value: 3, text: "Quarta" },
+    { value: 4, text: "Quinta" },
+    { value: 5, text: "Sexta" },
+    { value: 6, text: "Sábado" }
   ],
 
   components: {
