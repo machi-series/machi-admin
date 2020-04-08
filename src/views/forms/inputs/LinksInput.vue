@@ -41,7 +41,8 @@
 const defaultLinks = () => ({
   low: [],
   medium: [],
-  high: []
+  high: [],
+  online: []
 });
 
 export default {
@@ -89,7 +90,8 @@ export default {
         typeof nextValue === "object" &&
         Array.isArray(nextValue.low) &&
         Array.isArray(nextValue.medium) &&
-        Array.isArray(nextValue.high);
+        Array.isArray(nextValue.high) &&
+        Array.isArray(nextValue.online);
 
       if (!valid) {
         this.links = defaultLinks();
@@ -107,7 +109,8 @@ function same(left, right) {
   return [
     [left.low, right.low],
     [left.medium, right.medium],
-    [left.high, right.high]
+    [left.high, right.high],
+    [left.online, right.online]
   ].every(
     ([x = [], y = []]) =>
       x.length === y.length && x.every((value, i) => y[i] === value)
