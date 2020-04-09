@@ -387,7 +387,7 @@ export default {
     },
 
     trailer(value) {
-      return value.startsWith("http");
+      return value.includes("http");
     }
   },
 
