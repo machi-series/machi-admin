@@ -227,6 +227,17 @@
         </div>
       </div>
 
+      <b-card title="Relacionamentos" class="mt-4 mb-4">
+        <RelationsInput
+          v-model="form.relatedSeries"
+          @input="dirty('relatedSeries')"
+        />
+
+        <b-form-invalid-feedback>
+          {{ relatedSeriesValidation.messages.join("\n") }}
+        </b-form-invalid-feedback>
+      </b-card>
+
       <b-card title="Transmissão" class="mt-4 mb-4">
         <b-form-group label="Hora de lançamento">
           <b-form-input
@@ -281,6 +292,7 @@ import TagsInput from "@/views/forms/inputs/TagsInput";
 import SeriesTypeInput from "@/views/forms/inputs/SeriesTypeInput";
 import ReleaseStatusInput from "@/views/forms/inputs/ReleaseStatusInput";
 import ClassificationInput from "@/views/forms/inputs/ClassificationInput";
+import RelationsInput from "@/views/forms/inputs/RelationsInput";
 import { mapGetters } from "vuex";
 
 const status = ["draft", "published", "deleted", "revision"];
@@ -306,7 +318,8 @@ export default {
         trailer: "",
         producer: "",
         classification: "open",
-        releaseStatus: "tba"
+        releaseStatus: "tba",
+        relatedSeries: {}
       };
 
       return Object.assign(defaults, {
@@ -332,7 +345,8 @@ export default {
     TagsInput,
     SeriesTypeInput,
     ReleaseStatusInput,
-    ClassificationInput
+    ClassificationInput,
+    RelationsInput
   },
 
   createdAlertTitle: "Série criada",
