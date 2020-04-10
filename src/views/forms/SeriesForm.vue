@@ -46,6 +46,18 @@
               <b-form-input
                 v-model="form.title"
                 @input="dirty('title')"
+                @blur="
+                  {
+                    if (!isDirty.slug) {
+                      form.slug = form.title
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .split('')
+                        .filter(c => /^([a-z]|-|\d)+$/.test(c))
+                        .join('');
+                    }
+                  }
+                "
               ></b-form-input>
               <b-form-invalid-feedback>
                 {{ titleValidation.messages.join("\n") }}
