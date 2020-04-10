@@ -34,6 +34,23 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
+            <b-form-group label="Mostrar lançamento" class="mt-2">
+              <b-form-checkbox
+                v-model="form.ignoreIndex"
+                @input="dirty('ignoreIndex')"
+                :value="false"
+                :unchecked-value="true"
+              >
+                <div class="pt-1">
+                  Este episódio <b>aparecerá</b> na página inicial
+                </div>
+              </b-form-checkbox>
+
+              <b-form-invalid-feedback>
+                {{ ignoreIndexValidation.messages.join(", ") }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
             <b-form-group label="Título">
               <b-form-input
                 v-model="form.title"
@@ -195,6 +212,7 @@ export default {
         title: "",
         slug: "",
         status: "draft",
+        ignoreIndex: false,
         number: "",
         source: "",
         priority: 0,
