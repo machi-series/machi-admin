@@ -48,7 +48,7 @@
                 @input="dirty('title')"
                 @blur="
                   {
-                    if (!isDirty.slug) {
+                    if (!isDirty.slug && !form.slug.length) {
                       form.slug = form.title
                         .toLowerCase()
                         .replace(/\s+/g, '-')

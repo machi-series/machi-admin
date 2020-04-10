@@ -38,6 +38,18 @@
               <b-form-input
                 v-model="form.title"
                 @input="dirty('title')"
+                @blur="
+                  {
+                    if (!isDirty.slug && !form.slug.length) {
+                      form.slug = form.title
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .split('')
+                        .filter(c => /^([a-z]|-|\d)+$/.test(c))
+                        .join('');
+                    }
+                  }
+                "
               ></b-form-input>
             </b-form-group>
 
