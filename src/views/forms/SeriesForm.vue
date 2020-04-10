@@ -71,10 +71,11 @@
                 @input="dirty('synopsis')"
                 :rows="3"
                 :max-rows="10"
+                :state="synopsisValidation.state"
               ></b-form-textarea>
 
               <b-form-invalid-feedback>
-                {{ slugValidation.messages.join("\n") }}
+                {{ synopsisValidation.messages.join("\n") }}
               </b-form-invalid-feedback>
             </b-form-group>
 
