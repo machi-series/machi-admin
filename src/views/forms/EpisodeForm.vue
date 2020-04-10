@@ -43,7 +43,7 @@
                     if (!isDirty.slug && !form.slug.length) {
                       form.slug = form.title
                         .toLowerCase()
-                        .replace(/\s+/g, '-')
+                        .replace(/(\s|-)+/g, '-')
                         .split('')
                         .filter(c => /^([a-z]|-|\d)+$/.test(c))
                         .join('');
