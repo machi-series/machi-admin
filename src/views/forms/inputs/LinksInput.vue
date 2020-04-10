@@ -66,12 +66,14 @@ export default {
   methods: {
     setLink(key, i, value) {
       this.links[key][i] = value;
+      if (!value.startsWith("http")) {
+        return;
+      }
       this._emit();
     },
 
     addLink(key) {
       this.links[key].push("");
-      this._emit();
     },
 
     removeLink(key, i) {
@@ -80,7 +82,14 @@ export default {
     },
 
     _emit() {
-      this.$emit("input", JSON.parse(JSON.stringify(this.links)));
+      this.$emit(
+        "input",
+        JSON.parse(JSON.stringify(this.links), (key, value) =>
+          Array.isArray(value)
+            ? value.filter(v => v.trim().includes("http"))
+            : value
+        )
+      );
     }
   },
 
