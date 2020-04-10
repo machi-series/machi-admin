@@ -47,7 +47,8 @@ export default {
 
   props: {
     value: [Number, Object, Boolean],
-    image: [Boolean, Object]
+    image: [Boolean, Object],
+    params: [Boolean, Object]
   },
 
   data() {
