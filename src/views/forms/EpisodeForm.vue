@@ -139,7 +139,7 @@
         :image="entity.cover"
         :width="330"
         :height="180"
-        :params="{ width: 330 }"
+        :params="{ width: 330, height: 180 }"
         noCircle
       />
 
