@@ -22,7 +22,7 @@
       </b-row>
     </b-container>
 
-    <MyUpload
+    <UploadImage
       v-if="show"
       v-bind="$attrs"
       v-on="{ ...$listeners, input: () => {} }"
@@ -33,17 +33,17 @@
       field="image"
       :url="url"
       langType="pt-br"
-    ></MyUpload>
+    ></UploadImage>
   </div>
 </template>
 
 <script>
-import MyUpload from "vue-image-crop-upload";
+import UploadImage from "@/components/UploadImage";
 
 export default {
   name: "ImageInput",
 
-  components: { MyUpload },
+  components: { UploadImage },
 
   props: {
     value: [Number, Object, Boolean],

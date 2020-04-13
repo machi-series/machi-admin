@@ -209,9 +209,8 @@
         v-model="form.coverId"
         @input="dirty('coverId')"
         :image="entity.cover"
-        :width="220"
-        :height="320"
-        :params="{ width: 220 }"
+        :params="{ width: 220, height: 320 }"
+        :allowAllSizes="true"
         noCircle
       />
 
