@@ -24,7 +24,7 @@ Vue.filter("image", function capitalize(name) {
 });
 Vue.filter("avatar", function capitalize(user) {
   if (!user.avatar) {
-    return "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61%3Fs=200";
+    return "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61%3Fs=200";
   }
   const name = user.avatar.originalName;
   return process.env.VUE_APP_BASE_URL + "/images/" + name;
