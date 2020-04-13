@@ -18,6 +18,7 @@
         <b-form-input
           :value="link"
           @input="setLink(key, i, $event)"
+          @paste="ev => onPaste(ev, key, i)"
           placeholder="URL"
         ></b-form-input>
         <b-input-group-append>
@@ -72,8 +73,31 @@ export default {
       this._emit();
     },
 
-    addLink(key) {
-      this.links[key].push("");
+    onPaste(ev, key, i) {
+      const data = (ev.clipboardData || window.clipboardData).getData("text");
+
+      if (!data) {
+        return;
+      }
+
+      ev.preventDefault();
+
+      const links = data.split(/\s+/);
+      let startIndex = 0;
+
+      if (this.links[key][i].trim().length === 0) {
+        this.setLink(key, i, links[0]);
+        startIndex = 1;
+      }
+
+      for (let link of links.slice(startIndex)) {
+        this.addLink(key, link);
+      }
+      this._emit();
+    },
+
+    addLink(key, data = "") {
+      this.links[key].push(data);
     },
 
     removeLink(key, i) {
