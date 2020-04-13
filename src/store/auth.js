@@ -1,4 +1,6 @@
+import Vue from "vue";
 import axios from "../axios";
+import router from "@/router";
 
 export const namespaced = true;
 
@@ -63,5 +65,22 @@ export const actions = {
   logout({ commit }) {
     commit("setToken", false);
     commit("setUser", false);
+  },
+
+  async checkCredentials({ dispatch }) {
+    await axios.get("/me").catch(err => {
+      if (
+        err &&
+        err.response &&
+        err.response.data &&
+        err.response.data.error &&
+        err.response.data.error.name === "ExpiredJwtToken"
+      ) {
+        dispatch("logout").then(() => {
+          Vue.prototype.$swal("😲", "Login expirado", "error");
+          router.push("/login");
+        });
+      }
+    });
   }
 };

@@ -9,10 +9,19 @@ const persistence = new VuexPersistence({
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
   modules: { auth },
   plugins: [persistence.plugin]
 });
+
+export default store;
+
+setInterval(() => {
+  const isLoggedIn = store.getters["auth/isLoggedIn"];
+  if (isLoggedIn && store.dispatch) {
+    store.dispatch("auth/checkCredentials").catch(() => {});
+  }
+}, 10000);
