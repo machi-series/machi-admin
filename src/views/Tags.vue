@@ -1,7 +1,7 @@
 <template lang="html">
   <section class="tables">
     <div class="row">
-      <div class="col-lg-6 grid-margin">
+      <div class="col-lg-5 grid-margin">
         <TagForm
           :entity="editingEntity"
           @stopEditing="editingEntity = false"
@@ -11,7 +11,7 @@
         />
       </div>
 
-      <div class="col-lg-6 grid-margin stretch-card">
+      <div class="col-lg-7 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <b-form-group label="Pesquisa">

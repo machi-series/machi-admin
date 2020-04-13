@@ -21,6 +21,10 @@
               :items="items"
               :fields="$options.fields"
             >
+              <template v-slot:cell(status)="data">
+                <StatusBadge :status="data.item.status" />
+              </template>
+
               <template v-slot:cell(actions)="data">
                 <b-button
                   variant="outline-primary"
@@ -47,11 +51,13 @@
 <script>
 import SeriesShortCard from "@/components/SeriesShortCard.vue";
 import WithTable from "@/mixins/WithTable";
+import StatusBadge from "@/components/StatusBadge";
 
 export default {
   name: "SeriesEpisodes",
 
   components: {
+    StatusBadge,
     SeriesShortCard
   },
 
@@ -67,8 +73,8 @@ export default {
       label: "Título"
     },
     {
-      key: "slug",
-      label: "Slug"
+      key: "status",
+      label: "Status"
     },
     {
       key: "actions",

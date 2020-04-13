@@ -15,6 +15,10 @@
               :items="items"
               :fields="$options.fields"
             >
+              <template v-slot:cell(status)="data">
+                <StatusBadge :status="data.item.status" />
+              </template>
+
               <template v-slot:cell(actions)="data">
                 <b-button-group size="sm">
                   <b-button :to="`/series/${data.item.id}`" variant="primary">
@@ -47,9 +51,12 @@
 
 <script>
 import WithTable from "@/mixins/WithTable";
+import StatusBadge from "@/components/StatusBadge";
 
 export default {
   name: "Series",
+
+  components: { StatusBadge },
 
   mixins: [WithTable("series")],
 
@@ -63,8 +70,8 @@ export default {
       label: "Título"
     },
     {
-      key: "slug",
-      label: "Slug"
+      key: "status",
+      label: "Status"
     },
     {
       key: "actions",
