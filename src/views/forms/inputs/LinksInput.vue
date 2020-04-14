@@ -67,30 +67,28 @@ export default {
   methods: {
     setLink(key, i, value) {
       this.links[key][i] = value;
-      if (!value.startsWith("http")) {
+      if (!value || !value.startsWith("http")) {
         return;
       }
       this._emit();
     },
 
-    onPaste(ev, key, i) {
+    onPaste(ev, key) {
       const data = (ev.clipboardData || window.clipboardData).getData("text");
 
-      if (!data) {
+      if (!data || !data.startsWith("http")) {
+        return;
+      }
+
+      const links = data.split(/\s+/);
+
+      if (links.length < 2) {
         return;
       }
 
       ev.preventDefault();
 
-      const links = data.split(/\s+/);
-      let startIndex = 0;
-
-      if (this.links[key][i].trim().length === 0) {
-        this.setLink(key, i, links[0]);
-        startIndex = 1;
-      }
-
-      for (let link of links.slice(startIndex)) {
+      for (let link of links) {
         this.addLink(key, link);
       }
       this._emit();
@@ -110,7 +108,7 @@ export default {
         "input",
         JSON.parse(JSON.stringify(this.links), (key, value) =>
           Array.isArray(value)
-            ? value.filter(v => v.trim().includes("http"))
+            ? value.filter(v => v && v.trim().includes("http"))
             : value
         )
       );
