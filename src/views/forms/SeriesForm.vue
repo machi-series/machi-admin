@@ -49,12 +49,7 @@
                 @blur="
                   {
                     if (!isDirty.slug && !form.slug.length) {
-                      form.slug = form.title
-                        .toLowerCase()
-                        .replace(/(\s|-)+/g, '-')
-                        .split('')
-                        .filter(c => /^([a-z]|-|\d)+$/.test(c))
-                        .join('');
+                      form.slug = $options.slugify(form.title, { lower: true });
                     }
                   }
                 "
@@ -306,10 +301,13 @@ import ReleaseStatusInput from "@/views/forms/inputs/ReleaseStatusInput";
 import ClassificationInput from "@/views/forms/inputs/ClassificationInput";
 import RelationsInput from "@/views/forms/inputs/RelationsInput";
 import { mapGetters } from "vuex";
+import slugify from "slugify";
 
 const status = ["draft", "published", "deleted", "revision"];
 export default {
   name: "SeriesForm",
+
+  slugify,
 
   mixins: [
     WithForm(function defaultForm(entity = {}) {

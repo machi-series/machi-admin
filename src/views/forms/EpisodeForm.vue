@@ -58,12 +58,7 @@
                 @blur="
                   {
                     if (!isDirty.slug && !form.slug.length) {
-                      form.slug = form.title
-                        .toLowerCase()
-                        .replace(/(\s|-)+/g, '-')
-                        .split('')
-                        .filter(c => /^([a-z]|-|\d)+$/.test(c))
-                        .join('');
+                      form.slug = $options.slugify(form.title, { lower: true });
                     }
                   }
                 "
@@ -196,6 +191,7 @@ import LinksInput from "@/views/forms/inputs/LinksInput";
 import EpisodeQualityInput from "@/views/forms/inputs/EpisodeQualityInput";
 import EpisodeTypeInput from "@/views/forms/inputs/EpisodeTypeInput";
 import { mapGetters } from "vuex";
+import slugify from "slugify";
 
 const status = ["draft", "published", "deleted", "revision"];
 const episodeTypes = ["episode", "ova", "movie", "special"];
@@ -203,6 +199,8 @@ const episodeQualities = ["bluray", "hdtv", "dvd"];
 
 export default {
   name: "EpisodeForm",
+
+  slugify,
 
   mixins: [
     WithForm(function defaultForm() {
