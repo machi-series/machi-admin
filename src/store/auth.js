@@ -69,13 +69,7 @@ export const actions = {
 
   async checkCredentials({ dispatch }) {
     await axios.get("/me").catch(err => {
-      if (
-        err &&
-        err.response &&
-        err.response.data &&
-        err.response.data.error &&
-        err.response.data.error.name === "ExpiredJwtToken"
-      ) {
+      if (err && err.response && err.response.status === 401) {
         dispatch("logout").then(() => {
           Vue.prototype.$swal("😲", "Login expirado", "error");
           router.push("/login");
