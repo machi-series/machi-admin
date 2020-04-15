@@ -29,6 +29,28 @@
             <span class="menu-title">Usuários</span>
           </router-link>
         </li>
+        <li v-if="isManager" class="nav-item">
+          <span class="nav-link" v-b-toggle="'news-toggle'">
+            <i class="mdi mdi-newspaper menu-icon"></i>
+            <span class="menu-title">Notícias</span>
+            <i class="menu-arrow"></i>
+          </span>
+
+          <b-collapse id="news-toggle">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/news/" exact>
+                  Lista
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/news/new">
+                  Nova
+                </router-link>
+              </li>
+            </ul>
+          </b-collapse>
+        </li>
         <li class="nav-item">
           <span class="nav-link" v-b-toggle="'series-toggle'">
             <i class="mdi mdi-laptop menu-icon"></i>
@@ -85,7 +107,7 @@ export default {
   name: "AppSidebar",
 
   computed: {
-    ...mapGetters("auth", ["isLoggedIn", "currentUser", "isAdmin"])
+    ...mapGetters("auth", ["isLoggedIn", "currentUser", "isManager", "isAdmin"])
   }
 };
 </script>

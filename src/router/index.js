@@ -7,6 +7,8 @@ import dashboard from "../views/dashboard";
 import Users from "../views/Users";
 import Tags from "../views/Tags";
 import Series from "../views/Series";
+import News from "../views/News";
+import EditNews from "../views/EditNews";
 import EditSeries from "../views/EditSeries";
 import EditEpisode from "../views/EditEpisode";
 import SeriesEpisodes from "../views/SeriesEpisodes";
@@ -76,6 +78,18 @@ const router = new Router({
       path: "/tags",
       name: "tags",
       component: Tags
+    },
+    {
+      path: "/news/:id",
+      name: "editNews",
+      component: EditNews,
+      meta: { isManagerRoute: true }
+    },
+    {
+      path: "/news",
+      name: "news",
+      component: News,
+      meta: { isManagerRoute: true }
     },
     {
       path: "/series/:id",
@@ -225,10 +239,12 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters["auth/isLoggedIn"];
   const isAdmin = store.getters["auth/isAdmin"];
+  const isManager = store.getters["auth/isManager"];
   const {
     ignoreRouterRules = false,
     isGuestRoute = false,
-    isAdminRoute = false
+    isAdminRoute = false,
+    isManagerRoute = false
   } = to.meta;
 
   if (ignoreRouterRules) {
@@ -236,6 +252,9 @@ router.beforeEach((to, from, next) => {
   }
 
   if (isGuestRoute && isLoggedIn) {
+    return next({ name: "dashboard" });
+  }
+  if (isManagerRoute && !isManager) {
     return next({ name: "dashboard" });
   }
   if (isAdminRoute && !isAdmin) {
