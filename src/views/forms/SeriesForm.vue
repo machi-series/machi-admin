@@ -372,6 +372,9 @@ export default {
     },
 
     releaseDate(value) {
+      if (!value || value.length === 0) {
+        return true;
+      }
       const re = /^\d{2}\/\d{2}\/\d{4}$/;
       return re.test(value) && Number(value.slice(-4)) > 1900;
     },
