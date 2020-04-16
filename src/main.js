@@ -5,13 +5,16 @@ import BootstrapVue from "bootstrap-vue";
 import store from "./store";
 import axios from "./axios";
 import VueSwal from "vue-swal";
+import VueCodemirror from "vue-codemirror";
 import VueMoment from "vue-moment";
 import moment from "moment";
 import "moment/locale/pt-br";
+import "codemirror/lib/codemirror.css";
 
 Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(VueMoment, { moment });
+Vue.use(VueCodemirror);
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;

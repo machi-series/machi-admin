@@ -98,9 +98,32 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-group label="Conteúdo">
+            <b-form-group>
+              <legend slot="label" class="bv-no-focus-ring col-form-label pt-0">
+                <b-btn
+                  :variant="showCode ? 'success' : 'danger'"
+                  style="float: right"
+                  @click="
+                    () => {
+                      showCode = !showCode;
+                      if (showCode) {
+                        form.content = $options.pretty(form.content);
+                      }
+                    }
+                  "
+                >
+                  {{ showCode ? "Esconder" : "Mostrar" }} Código
+                </b-btn>
+                Conteúdo
+              </legend>
+              <codemirror
+                v-if="showCode"
+                v-model="form.content"
+                :options="codemirror"
+                @input="dirty('content')"
+              />
               <quill-editor
-                ref="myQuillEditor"
+                v-else
                 v-model="form.content"
                 :options="{ placeholder: '...' }"
                 @input="dirty('content')"
@@ -148,16 +171,19 @@ import StatusInput from "@/views/forms/inputs/StatusInput";
 import ImageInput from "@/views/forms/inputs/ImageInput";
 import { mapGetters } from "vuex";
 import slugify from "slugify";
+import pretty from "pretty";
 import { quillEditor } from "vue-quill-editor";
 
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
+import "codemirror/theme/monokai.css";
 
 const status = ["draft", "published", "deleted", "revision"];
 export default {
   name: "SeriesForm",
 
   slugify,
+  pretty,
 
   mixins: [
     WithForm(function defaultForm() {
@@ -191,6 +217,23 @@ export default {
     status(value) {
       return status.includes(value);
     }
+  },
+
+  data() {
+    return {
+      showCode: false,
+      codemirror: {
+        styleActiveLine: true,
+        lineNumbers: true,
+        line: true,
+        foldGutter: true,
+        styleSelectedText: true,
+        mode: "text/html",
+        matchBrackets: true,
+        showCursorWhenSelecting: true,
+        theme: "monokai"
+      }
+    };
   },
 
   computed: {
