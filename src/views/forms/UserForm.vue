@@ -87,6 +87,14 @@
           Reset
         </b-button>
         <b-button
+          v-if="isEditing && isAdmin"
+          @click.prevent="confirmDelete"
+          variant="danger"
+          class="mr-2"
+        >
+          Deletar
+        </b-button>
+        <b-button
           v-if="!isProfile && isEditing"
           @click.prevent="stopEditing"
           variant="light"
